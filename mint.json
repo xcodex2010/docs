@@ -51,10 +51,6 @@
         {
           "group": "Coins",
           "pages": ["api-reference/endpoint/v1/coins/coins", "api-reference/endpoint/v1/coins/info"]
-        },
-        {
-          "group": "Transaction",
-          "pages": []
         }
       ]
     }
