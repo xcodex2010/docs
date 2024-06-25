@@ -1,11 +1,7 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: Introducing LetsExchange API
+description: ''
 ---
-
-<Note>
-Base URL: **api.letsexchange.io/api**
-</Note>
 
 LetsExchange API ver.1 allows you to get programming access to the services the LetsExchange multi-currency exchange service.
 Some of the requests have such parameters as 'coin_from' or ‘coin_to’, which a coin ticker in uppercase.
@@ -14,17 +10,12 @@ All requests need to be executed using HTTPS, this is a security measure.
 
 Extra ID is an additional field for the wallet addresses of currencies that may use an additional ID for transaction
 processing (XRP, STEEM/SBD, XLM, DCT, XEM, XMR). This parameter should be filled only if the coin has this additional identifier.
-In any other case this parameter is not filled or not sent at all. All **requests need to be executed using HTTPS**,
+In any other case this parameter is not filled or not sent at all. All requests need to be executed using HTTPS,
 this is a security measure.
 
-<Note>
-For **every request**, the following parameters should be used in headers:
-```json
-{
-    'headers': {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    }
-}
-```
-</Note>
+<Card
+    title="Reference APIs"
+    icon="code"
+    href="/api-reference/introduction"
+>
+</Card>

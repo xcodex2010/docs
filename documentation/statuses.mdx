@@ -1,0 +1,31 @@
+---
+title: 'Transaction statuses'
+description: ''
+---
+
+
+### <Icon icon="bookmark" iconType="regular" color="#0ea5e9" size={20} /> wait
+> The exchange has just been created and it’s waiting for coins to reach the deposit wallet.
+<br />
+### <Icon icon="bookmark" iconType="regular" color="#d1ae42" size={20} /> confirmation
+> The transaction appears in mempool and now it is waiting for necessary network confirmations to start.
+### <Icon icon="bookmark" iconType="regular" color="#d1ae42" size={20} /> confirmed
+> The user’s payment is confirmed, the exchange process is about to start.
+### <Icon icon="bookmark" iconType="regular" color="#d1ae42" size={20} /> exchanging
+> The exchange process is running.
+<br />
+### <Icon icon="bookmark" iconType="regular" color="#55d799" size={20} /> sending
+> Funds are being sent to the recipient`s address.
+### <Icon icon="bookmark" iconType="regular" color="#55d799" size={20} /> sending_confirmation
+> The outgoing transaction is waiting for network confirmations.
+### <Icon icon="bookmark" iconType="regular" color="#55d799" size={20} /> success
+> The exchange is completed and the funds are successfully sent to the recipient’s address.
+<br />
+### <Icon icon="bookmark" iconType="regular" color="#ea5e5e" size={20} /> aml_check_failed
+> The deposit was marked as risky by AML check service.
+### <Icon icon="bookmark" iconType="regular" color="#ea5e5e" size={20} /> overdue
+> The deposit receiving time for this transaction has expired.
+### <Icon icon="bookmark" iconType="regular" color="#ea5e5e" size={20} /> error
+> The transaction has failed. In most cases, the amount that was sent differs from the amount that was specified when creating the transaction.
+### <Icon icon="bookmark" iconType="regular" color="#ea5e5e" size={20} /> refund
+> The exchange failed and the coins were refunded to the user's wallet.

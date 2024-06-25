@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
+    "description": "",
     "license": {
       "name": "MIT"
     },
@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
+      "url": "https://api.letsexchange.io"
     }
   ],
   "security": [
@@ -19,6 +19,74 @@
     }
   ],
   "paths": {
+    "/v1/coins": {
+      "get": {
+        "description": "This returns the list of coins, available for exchange with selected coin at given time, or gets entire list of coins.\nResponse also contains such parameters as extra id name, if it exists. For example, destination tag for Ripple, message for XEM or payment id for Monero. In addition, it provides icon links.",
+        "responses": {
+          "200": {
+            "description": "Coins response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CoinResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/info": {
+      "post": {
+        "description": "Gets current rate, calculates final amount that user will get, and also it sets minimum and maximum amounts for deposit.",
+        "requestBody": {
+          "description": "Plant to add to the store",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CoinInfoRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Coin Info response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CoinInfoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/plants": {
       "get": {
         "description": "Returns all plants from the system that the user has access to",
@@ -132,6 +200,151 @@
   },
   "components": {
     "schemas": {
+      "CoinResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Coin short name (code)",
+            "type": "string"
+          },
+          "name": {
+            "description": "Currency full name",
+            "type": "string"
+          },
+          "network_code": {
+            "description": "Coin network code",
+            "type": "string"
+          },
+          "network_name": {
+            "description": "Coin network name",
+            "type": "string"
+          },
+          "default_network_code": {
+            "description": "Coin default network code",
+            "type": "string"
+          },
+          "default_network_name": {
+            "description": "Coin default network name",
+            "type": "string"
+          },
+          "disabled": {
+            "description": "The availability of the coins. 0 - available, 1 - unavailable",
+            "type": "number"
+          },
+          "icon": {
+            "description": "The link to the coin logo",
+            "type": "string"
+          },
+          "has_extra": {
+            "description": "1 if coin may have an extra ID in addition to the address, 0 if it doesn’t",
+            "type": "number"
+          },
+          "extra_name": {
+            "description": "Name of the extra ID",
+            "type": "string"
+          },
+          "additional_info_get": {
+            "description": "Additional info for get coin",
+            "type": "string"
+          },
+          "additional_info_send": {
+            "description": "Additional info for send coin",
+            "type": "string"
+          },
+          "explorer": {
+            "description": "Currency blockchain explorer URL. It is used for checking transaction status in block explorer",
+            "type": "string"
+          }
+        }
+      },
+
+      "CoinInfoRequest": {
+        "required": [
+          "from",
+          "to",
+          "network_from",
+          "network_to",
+          "amount"
+        ],
+        "type": "object",
+        "properties": {
+          "from": {
+            "description": "Coin code from",
+            "type": "string"
+          },
+          "to": {
+            "description": "Coin code to",
+            "type": "string"
+          },
+          "network_from": {
+            "description": "Code for 'from' network currency",
+            "type": "string"
+          },
+          "network_to": {
+            "description": "Code for 'to' network currency",
+            "type": "string"
+          },
+          "amount": {
+            "description": "Amount of currency 'from'",
+            "type": "number"
+          },
+          "promocode": {
+            "description": "Is transaction with promocode",
+            "type": "string"
+          },
+          "affiliate_id": {
+            "description": "Affiliate ID",
+            "type": "string"
+          },
+          "float": {
+            "description": "Is float",
+            "type": "boolean"
+          }
+        }
+      },
+
+      "CoinInfoResponse": {
+        "type": "object",
+        "properties": {
+          "min_amount": {
+            "description": "Minimum possible amount to be sent",
+            "type": "string"
+          },
+          "max_amount": {
+            "description": "Maximum possible amount to be sent; usually we do not have upper limits",
+            "type": "string"
+          },
+          "amount": {
+            "description": "The final amount that user will receive after the exchange",
+            "type": "string"
+          },
+          "fee": {
+            "description": "Service fee (in destination currency)",
+            "type": "string"
+          },
+          "rate": {
+            "description": "Current exchange rate offered by letsexchange.io",
+            "type": "string"
+          },
+          "profit": {
+            "description": "Promocode bonus value (float|null)",
+            "type": "string"
+          },
+          "withdrawal_fee": {
+            "description": "Withdrawal fee specified in the 'to' currency (float)",
+            "type": "string"
+          },
+          "rate_id": {
+            "description": "Rate identifier for a FIXED rate flow (string|null)",
+            "type": "string"
+          },
+          "rate_id_expired_at": {
+            "description": "Rate ID expired at value on milliseconds (number|null)",
+            "type": "string"
+          }
+        }
+      },
+
       "Plant": {
         "required": [
           "name"
