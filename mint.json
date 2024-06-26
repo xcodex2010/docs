@@ -53,7 +53,8 @@
           "pages": [
             "api-reference/endpoint/v1/coins/coins",
             "api-reference/endpoint/v1/coins/info",
-            "api-reference/endpoint/v1/coins/info-revert"
+            "api-reference/endpoint/v1/coins/info-revert",
+            "api-reference/endpoint/v1/coins/info-bulk"
           ]
         }
       ]

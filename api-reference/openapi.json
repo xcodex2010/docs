@@ -241,6 +241,83 @@
           }
         }
       }
+    },
+
+    "/v1/info-bulk": {
+      "post": {
+        "description": "",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CoinInfoBulkRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Coin Info Revert response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CoinInfoRevertResponse"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Wrong API key in Bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WrongAPITokenError"
+                },
+                "example": {
+                  "error": "Wrong number of segments"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": {
+                    "validation": {
+                      "coins": "The coins field is required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Internal error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -375,7 +452,6 @@
           }
         }
       },
-
       "CoinInfoResponse": {
         "type": "object",
         "properties": {
@@ -478,7 +554,6 @@
           }
         }
       },
-
       "CoinInfoRevertResponse": {
         "type": "object",
         "properties": {
@@ -528,6 +603,90 @@
             "description": "Rate ID expired at value on milliseconds",
             "example": "1719396641906",
             "nullable": true,
+            "type": "string"
+          }
+        }
+      },
+
+      "CoinInfoBulkRequest": {
+        "required": [
+          "float",
+          "affiliate_id",
+          "coins"
+        ],
+        "type": "object",
+        "properties": {
+          "float": {
+            "description": "Is float rate",
+            "example": true,
+            "type": "boolean"
+          },
+          "affiliate_id": {
+            "description": "Affiliate ID",
+            "example": "q1W2e3R4tEXAMPLE",
+            "type": "string"
+          },
+          "coins": {
+            "description": "You will get coins rates with pairs from intersections between that list.",
+            "example": ["BTC", "USDT", "ETH"],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "CoinInfoBulkResponse": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "description": "Coin code from",
+            "example": "USDT",
+            "type": "string"
+          },
+          "to": {
+            "description": "Coin code from",
+            "example": "BTC",
+            "type": "string"
+          },
+          "network_from": {
+            "description": "Code for `from` network currency",
+            "example": "ARBITRUM",
+            "type": "string"
+          },
+          "network_to": {
+            "description": "Code for `to` network currency",
+            "example": "BTC",
+            "type": "string"
+          },
+          "rate": {
+            "description": "Current exchange rate offered by letsexchange.io",
+            "example": "60102.709354577579216",
+            "type": "string"
+          },
+          "min_amount": {
+            "description": "Minimum possible amount to be sent",
+            "example": "0.002",
+            "type": "string"
+          },
+          "max_amount": {
+            "description": "Maximum possible amount to be sent; usually we do not have upper limits",
+            "example": "1500",
+            "type": "string"
+          },
+          "network_fee": {
+            "description": "Withdrawal fee specified in the `to` currency",
+            "example": "0.90634362",
+            "type": "string"
+          },
+          "rate_id": {
+            "description": "Rate identifier for a FIXED rate flow",
+            "example": "646006ec-c1c7-482e-acb6-682e7674fd7e",
+            "type": "string"
+          },
+          "rate_id_expired_at": {
+            "description": "Rate ID expired at value on milliseconds",
+            "example": "1719396641906",
             "type": "string"
           }
         }
