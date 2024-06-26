@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.0.0",
   "info": {
     "title": "OpenAPI Plant Store",
     "description": "",
@@ -36,12 +36,29 @@
               }
             }
           },
-          "400": {
+          "403": {
+            "description": "Wrong API key in Bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WrongAPITokenError"
+                },
+                "example": {
+                  "error": "Wrong number of segments"
+                }
+              }
+            }
+          },
+          "500": {
             "description": "Unexpected error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Internal error"
                 }
               }
             }
@@ -49,11 +66,12 @@
         }
       }
     },
+
     "/v1/info": {
       "post": {
         "description": "Gets current rate, calculates final amount that user will get, and also it sets minimum and maximum amounts for deposit.",
         "requestBody": {
-          "description": "Plant to add to the store",
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -74,12 +92,61 @@
               }
             }
           },
-          "400": {
+          "403": {
+            "description": "Wrong API key in Bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WrongAPITokenError"
+                },
+                "example": {
+                  "error": "Wrong number of segments"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Rate is not available for this pair."
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": {
+                    "validation": {
+                      "withdrawal_amount": "Min amoun: 0.002"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
             "description": "unexpected error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Internal error"
                 }
               }
             }
@@ -87,54 +154,16 @@
         }
       }
     },
-    "/plants": {
-      "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
+
+    "/v1/info-revert": {
       "post": {
-        "description": "Creates a new plant in the store",
+        "description": "This method is used when you want to get the exact amount of specific coins.\nFor example, when a customer needs to pay the bill with 5 XMR (coin ‘to’), and he needs to know how much BTC (coin ‘from’) he should send.\nThe request gets current rate, calculates the amount of coins that user should send to receive the desired amount of ‘target’ currency, and also it sets the minimum and the maximum amounts for the deposit.",
         "requestBody": {
-          "description": "Plant to add to the store",
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPlant"
+                "$ref": "#/components/schemas/CoinInfoRevertRequest"
               }
             }
           },
@@ -142,54 +171,70 @@
         },
         "responses": {
           "200": {
-            "description": "plant response",
+            "description": "Coin Info Revert response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
+                  "$ref": "#/components/schemas/CoinInfoRevertResponse"
                 }
               }
             }
           },
-          "400": {
+          "403": {
+            "description": "Wrong API key in Bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WrongAPITokenError"
+                },
+                "example": {
+                  "error": "Wrong number of segments"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Rate is not available for this pair."
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": {
+                    "validation": {
+                      "withdrawal_amount": "Min amoun: 0.002"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
             "description": "unexpected error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Internal error"
                 }
               }
             }
@@ -205,54 +250,73 @@
         "properties": {
           "code": {
             "description": "Coin short name (code)",
+            "example": "ETH-BEP20",
             "type": "string"
           },
           "name": {
             "description": "Currency full name",
+            "example": "Ethereum",
             "type": "string"
           },
           "network_code": {
             "description": "Coin network code",
+            "example": "BEP20",
             "type": "string"
           },
           "network_name": {
             "description": "Coin network name",
+            "example": "Binance Smart Chain (BEP20)",
             "type": "string"
           },
           "default_network_code": {
             "description": "Coin default network code",
+            "example": "ETH",
             "type": "string"
           },
           "default_network_name": {
             "description": "Coin default network name",
+            "example": "Ethereum",
             "type": "string"
           },
           "disabled": {
-            "description": "The availability of the coins. 0 - available, 1 - unavailable",
+            "description": "The availability of the coins. `0` - available, `1` - unavailable **[DEPRECATED]**",
+            "example": 1,
+            "type": "number"
+          },
+          "is_active": {
+            "description": "The availability of the coins. `1` - available, `0` - unavailable",
+            "example": 1,
             "type": "number"
           },
           "icon": {
             "description": "The link to the coin logo",
+            "example": "https://letsexchange.s3.eu-central-1.amazonaws.com/coins/23d9818d338b43e692dddf6455c0d197.svg",
             "type": "string"
           },
           "has_extra": {
-            "description": "1 if coin may have an extra ID in addition to the address, 0 if it doesn’t",
+            "description": "`1` if coin may have an extra ID in addition to the address,`0` if it doesn’t",
+            "example": 1,
             "type": "number"
           },
           "extra_name": {
             "description": "Name of the extra ID",
+            "example": "MEMO",
+            "nullable": true,
             "type": "string"
           },
           "additional_info_get": {
             "description": "Additional info for get coin",
+            "example": "Due to network requirements, the exchange will be processed after 500 confirmations of your deposit transaction.",
             "type": "string"
           },
           "additional_info_send": {
             "description": "Additional info for send coin",
+            "example": "Please note that token has migrated to the new Binance Chain contact address",
             "type": "string"
           },
           "explorer": {
             "description": "Currency blockchain explorer URL. It is used for checking transaction status in block explorer",
+            "example": "https://pacific-explorer.manta.network/",
             "type": "string"
           }
         }
@@ -264,40 +328,49 @@
           "to",
           "network_from",
           "network_to",
-          "amount"
+          "amount",
+          "affiliate_id"
         ],
         "type": "object",
         "properties": {
           "from": {
             "description": "Coin code from",
+            "example": "BTC",
             "type": "string"
           },
           "to": {
             "description": "Coin code to",
+            "example": "USDT",
             "type": "string"
           },
           "network_from": {
-            "description": "Code for 'from' network currency",
+            "description": "Code for `from` network currency",
+            "example": "BTC",
             "type": "string"
           },
           "network_to": {
-            "description": "Code for 'to' network currency",
+            "description": "Code for `to` network currency",
+            "example": "TRC20",
             "type": "string"
           },
           "amount": {
-            "description": "Amount of currency 'from'",
+            "description": "Amount of currency `from`",
+            "example": 0.01,
             "type": "number"
           },
           "promocode": {
             "description": "Is transaction with promocode",
+            "example": "promocodeExample",
             "type": "string"
           },
           "affiliate_id": {
             "description": "Affiliate ID",
+            "example": "q1W2e3R4tEXAMPLE",
             "type": "string"
           },
           "float": {
-            "description": "Is float",
+            "description": "Is float. Default value - true",
+            "example": true,
             "type": "boolean"
           }
         }
@@ -308,91 +381,180 @@
         "properties": {
           "min_amount": {
             "description": "Minimum possible amount to be sent",
+            "example": "0.002",
             "type": "string"
           },
           "max_amount": {
             "description": "Maximum possible amount to be sent; usually we do not have upper limits",
+            "example": "1500",
             "type": "string"
           },
           "amount": {
             "description": "The final amount that user will receive after the exchange",
+            "example": "6004.36459183",
             "type": "string"
           },
           "fee": {
             "description": "Service fee (in destination currency)",
+            "example": "0",
             "type": "string"
           },
           "rate": {
             "description": "Current exchange rate offered by letsexchange.io",
+            "example": "60102.709354577579216",
             "type": "string"
           },
           "profit": {
-            "description": "Promocode bonus value (float|null)",
+            "description": "Promocode bonus value",
+            "example": "13",
+            "nullable": true,
             "type": "string"
           },
           "withdrawal_fee": {
-            "description": "Withdrawal fee specified in the 'to' currency (float)",
+            "description": "Withdrawal fee specified in the `to` currency",
+            "example": "5.90634362",
             "type": "string"
           },
           "rate_id": {
-            "description": "Rate identifier for a FIXED rate flow (string|null)",
+            "description": "Rate identifier for a FIXED rate flow",
+            "example": "646006ec-c1c7-482e-acb6-682e7674fd7e",
+            "nullable": true,
             "type": "string"
           },
           "rate_id_expired_at": {
-            "description": "Rate ID expired at value on milliseconds (number|null)",
+            "description": "Rate ID expired at value on milliseconds",
+            "example": "1719396641906",
+            "nullable": true,
             "type": "string"
           }
         }
       },
 
-      "Plant": {
+      "CoinInfoRevertRequest": {
         "required": [
-          "name"
+          "from",
+          "to",
+          "network_from",
+          "network_to",
+          "amount",
+          "affiliate_id"
         ],
         "type": "object",
         "properties": {
-          "name": {
-            "description": "The name of the plant",
+          "from": {
+            "description": "Coin code from",
+            "example": "USDT",
             "type": "string"
           },
-          "tag": {
-            "description": "Tag to specify the type",
+          "to": {
+            "description": "Coin code to",
+            "example": "ETH",
+            "type": "string"
+          },
+          "network_from": {
+            "description": "Code for `from` network currency",
+            "example": "TRC20",
+            "type": "string"
+          },
+          "network_to": {
+            "description": "Code for `to` network currency",
+            "example": "ETH",
+            "type": "string"
+          },
+          "amount": {
+            "description": "Amount of currency `to`",
+            "example": "0.5",
+            "type": "number"
+          },
+          "promocode": {
+            "description": "Is transaction with promocode",
+            "example": "promocodeExample",
+            "type": "string"
+          },
+          "affiliate_id": {
+            "description": "Affiliate ID",
+            "example": "q1W2e3R4tEXAMPLE",
             "type": "string"
           }
         }
       },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
+
+      "CoinInfoRevertResponse": {
+        "type": "object",
+        "properties": {
+          "min_amount": {
+            "description": "Minimum possible amount to be sent",
+            "example": "0.002",
+            "type": "string"
           },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
+          "max_amount": {
+            "description": "Maximum possible amount to be sent; usually we do not have upper limits",
+            "example": "27000",
+            "type": "string"
+          },
+          "amount": {
+            "description": "The `from` amount the user must send to receive the amount from the request `amount`",
+            "example": "1725.45941279",
+            "type": "string"
+          },
+          "fee": {
+            "description": "Service fee (in destination currency)",
+            "example": "0",
+            "type": "string"
+          },
+          "rate": {
+            "description": "Current exchange rate offered by letsexchange.io",
+            "example": "0.000290844400000",
+            "type": "string"
+          },
+          "profit": {
+            "description": "Promocode bonus value",
+            "example": "13",
+            "nullable": true,
+            "type": "string"
+          },
+          "withdrawal_fee": {
+            "description": "Withdrawal fee specified in the `to` currency",
+            "example": "5.90634362",
+            "type": "string"
+          },
+          "rate_id": {
+            "description": "Rate identifier for a FIXED rate flow",
+            "example": "646006ec-c1c7-482e-acb6-682e7674fd7e",
+            "nullable": true,
+            "type": "string"
+          },
+          "rate_id_expired_at": {
+            "description": "Rate ID expired at value on milliseconds",
+            "example": "1719396641906",
+            "nullable": true,
+            "type": "string"
           }
-        ]
+        }
       },
+
       "Error": {
         "required": [
-          "error",
-          "message"
+          "success",
+          "error"
+        ],
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "WrongAPITokenError": {
+        "required": [
+          "error"
         ],
         "type": "object",
         "properties": {
           "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
             "type": "string"
           }
         }

@@ -22,7 +22,10 @@ To use the API key, each of your requests must contain an [Authorization header]
 ```
 </Note>
 
-
 <Warning>
 Each API Key is limited by the number of requests per hour, 400 requests in 1 hour.
+</Warning>
+
+<Warning>
+If you received a response with [HTTP status code 403](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403), it means that you have set an incorrect API key for the bearer token authorization.
 </Warning>
