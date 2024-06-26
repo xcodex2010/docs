@@ -64,7 +64,9 @@
             "api-reference/endpoint/v1/transaction/create-transaction",
             "api-reference/endpoint/v1/transaction/create-transaction-revert",
             "api-reference/endpoint/v1/transaction/transaction-check-promocode",
-            "api-reference/endpoint/v1/transaction/get-transaction"
+            "api-reference/endpoint/v1/transaction/get-transaction",
+            "api-reference/endpoint/v1/transaction/get-transactions-list",
+            "api-reference/endpoint/v1/transaction/get-transaction-status"
           ]
         }
       ]

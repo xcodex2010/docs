@@ -635,7 +635,7 @@
       "get": {
         "description": "Gets detailed information about a single transaction. One of returned parameters is ‘rate’, which is current rate offered by letsexchange.io. It may differ from market rate, and also may change rapidly depending on the markets.",
         "parameters": [{
-          "in": "query",
+          "in": "path",
           "name": "id",
           "schema": {
             "type": "string",
@@ -678,6 +678,122 @@
                 "example": {
                   "success": false,
                   "error": "Transaction not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Internal error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/v1/transactions-list": {
+      "get": {
+        "description": "Gets detailed information about transactions.",
+        "parameters": [{
+          "in": "query",
+          "name": "ids[]",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Transactions ids array assigned by letsexchange.io. \n\n **Use it right way - `?ids[]=be0c5f84c667c5&ids[]=f8c664be0c57c5&ids[]=57c664be5..`**",
+            "example": "599cd4bb4d4a5"
+          },
+          "required": true
+        }],
+        "responses": {
+          "200": {
+            "description": "Coins response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetTransactionResponse"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Wrong API key in Bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WrongAPITokenError"
+                },
+                "example": {
+                  "error": "Wrong number of segments"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Internal error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/v1/transaction/{id}/status": {
+      "get": {
+        "description": "Allows to check the current status of the transaction as a string.",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "string",
+            "description": "Unique identifier for transaction assigned by letsexchange.io",
+            "example": "599cd4bb4d4a5"
+          },
+          "required": true
+        }],
+        "responses": {
+          "200": {
+            "description": "Get Transaction Status response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTransactionStatusResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Wrong API key in Bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WrongAPITokenError"
+                },
+                "example": {
+                  "error": "Wrong number of segments"
                 }
               }
             }
@@ -1819,6 +1935,12 @@
             "type": "array"
           }
         }
+      },
+
+      "GetTransactionStatusResponse": {
+        "type": "string",
+        "description": "Transaction status is used to notify user about progress of the exchange process. [See *transaction statuses for detailed description](/documentation/statuses)",
+        "example": "success"
       },
 
       "Error": {
