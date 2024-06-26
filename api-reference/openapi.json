@@ -1091,7 +1091,7 @@
             "type": "string"
           },
           "profit": {
-            "description": "Promocode bonus value",
+            "description": "Promocode bonus value in BTC coin",
             "example": "13",
             "nullable": true,
             "type": "string"
@@ -1193,7 +1193,7 @@
             "type": "string"
           },
           "profit": {
-            "description": "Promocode bonus value",
+            "description": "Promocode bonus value in BTC coin",
             "example": "13",
             "nullable": true,
             "type": "string"
@@ -1237,7 +1237,7 @@
             "type": "string"
           },
           "coins": {
-            "description": "You will get coins rates with pairs from intersections between that list.",
+            "description": "You will get coins rates with pairs from intersections between that list. **Limit 50 coins per query!**",
             "example": ["BTC", "USDT", "ETH"],
             "type": "array",
             "items": {
@@ -1933,7 +1933,7 @@
             "type": "number"
           },
           "profit": {
-            "description": "Amount profit if promo code used. In `coin_to` value",
+            "description": "Promocode bonus value in BTC coin",
             "example": 0.01343595,
             "nullable": true,
             "type": "number"
