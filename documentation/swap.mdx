@@ -5,16 +5,23 @@ description: ''
 
 <Steps>
     <Step title="Get Coins List">
-        Call API - Get coins **GET /api/v1/coins**
-        <Info>Pay attention on **disabled** property.</Info>
+        Call API - Get coins with **[GET /api/v2/coins](/api-reference/endpoint/v2/coins/coins)**
+        <Note>Pay attention on `is_active` property.</Note>
+    </Step>
+    <Step title="Choose pair">
+        Choose two coin with `is_active: 1` in coin and network as a pair for rate calculation
     </Step>
     <Step title="Rate Calculation">
-        Call API - Get coin info **POST /api/v1/info**
+        Call API - Get coin info with **[POST /api/v1/info](/api-reference/endpoint/v1/coins/info)**
     </Step>
     <Step title="Create Transaction">
-        Call API - Create transaction **POST /api/v1/transaction**
+        If the rate calculated in step 3 is acceptable to you, then you can proceed to create the exchange.
+
+        Call API - Create transaction with **[POST /api/v1/transaction](/api-reference/endpoint/v1/transaction/create-transaction)**
     </Step>
     <Step title="Check Transaction Status">
-        Call API - Get transaction info **GET /api/v1/transaction/[id]**
+        To track the status changes of the exchange, use this API.
+
+        Call API - Get transaction info **[GET /api/v1/transaction/\{id\}](/api-reference/endpoint/v1/transaction/get-transaction)**
     </Step>
 </Steps>

@@ -905,6 +905,11 @@
             "description": "Currency blockchain explorer URL. It is used for checking transaction status in block explorer",
             "example": "https://pacific-explorer.manta.network/",
             "type": "string"
+          },
+          "contract_address": {
+            "description": "Contract address",
+            "example": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+            "type": "string"
           }
         }
       },
@@ -990,6 +995,11 @@
                 "explorer": {
                   "description": "Currency blockchain explorer URL. It is used for checking transaction status in block explorer",
                   "example": "https://pacific-explorer.manta.network/",
+                  "type": "string"
+                },
+                "contract_address": {
+                  "description": "Contract address",
+                  "example": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
                   "type": "string"
                 },
                 "validation_address_regex": {
@@ -1081,7 +1091,7 @@
             "type": "string"
           },
           "fee": {
-            "description": "Service fee (in destination currency)",
+            "description": "Service fee (in destination currency) **[DEPRECATED]**",
             "example": "0",
             "type": "string"
           },
@@ -1091,7 +1101,7 @@
             "type": "string"
           },
           "profit": {
-            "description": "Promocode bonus value in BTC coin",
+            "description": "Promo code bonus value in BTC coin. If promo code was used.",
             "example": "13",
             "nullable": true,
             "type": "string"
@@ -1183,7 +1193,7 @@
             "type": "string"
           },
           "fee": {
-            "description": "Service fee (in destination currency)",
+            "description": "Service fee (in destination currency) **[DEPRECATED]**",
             "example": "0",
             "type": "string"
           },
@@ -1467,7 +1477,7 @@
             "type": "string"
           },
           "fee": {
-            "description": "Service fee (in destination currency)",
+            "description": "Service fee (in destination currency) **[DEPRECATED]**",
             "example": "0",
             "type": "string"
           },
@@ -1688,7 +1698,7 @@
             "type": "string"
           },
           "fee": {
-            "description": "Service fee (in destination currency)",
+            "description": "Service fee (in destination currency) **[DEPRECATED]**",
             "example": "0",
             "type": "string"
           },
@@ -1864,7 +1874,7 @@
             "type": "string"
           },
           "fee": {
-            "description": "Service fee (in destination currency)",
+            "description": "Service fee (in destination currency) **[DEPRECATED]**",
             "example": "0",
             "type": "string"
           },
