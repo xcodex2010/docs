@@ -3,7 +3,8 @@ title: 'Authentication'
 description: ''
 ---
 
-Before calling the private API, the API key of the account needs to be generated to verify the identity. [You can log in on the website and generate it in](https://letsexchange.io/dashboard/api-keys).
+Before calling the private API, the API key of the account needs to be generated to verify the identity.
+[You can log in on the website](https://my.letsexchange.io/auth/login) and generate it by going to the **API for developers** -> **Create new API key**.
 
 Each account can create **5 API keys**, and the permission configuration of each key is independent of each other. It is recommended to set a note name for each key to indicate its purpose.
 
@@ -16,7 +17,7 @@ To use the API key, each of your requests must contain an [Authorization header]
 ```json
 {
     'headers': {
-        'Authorization': 'Bearer %API_KEY%'
+        'Authorization': 'Bearer %API_KEY_STRING%'
     }
 }
 ```

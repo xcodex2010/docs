@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "https://api.letsexchange.io"
+      "url": "https://api.letsexchange.io/api"
     }
   ],
   "security": [

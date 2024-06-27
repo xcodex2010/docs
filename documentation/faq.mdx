@@ -3,6 +3,12 @@ title: 'F.A.Q.'
 description: ''
 ---
 
+<Accordion title="Is it possible that coin is available only for a certain direction ?">
+    All our coins are available for both buy and sell directions equally.
+    Each coin from [v1/coins](/api-reference/endpoint/v1/coins/coins) or [v2/coins](/api-reference/endpoint/v2/coins/coins) response has `is_active` property.
+    <Note>`is_active: 1` - means it’s fully available. `is_active: 0` - not available.</Note>
+</Accordion>
+
 <Accordion title="I have generated 5 links via personal cabinet. How can I set the custom fee for each of them ?">
     To resolve this matter, please get in touch with [our support team](https://letsexchange.io/contact) or consult your account manager.
 </Accordion>
@@ -24,6 +30,10 @@ description: ''
 
 <Accordion title="Are all deposit addresses same for all orders ?">
     For some coins, unique addresses are utilized depending on various factors. These instances are reviewed individually and should be discussed with your account manager or [our support team](https://letsexchange.io/contact).
+</Accordion>
+
+<Accordion title="Is there any rate limits for API requests ?">
+    10 queries per second.
 </Accordion>
 
 <Accordion title="How do 'real_deposit_amount' and 'real_withdrawal_amount' differ from 'deposit_amount' and 'withdrawal_amount' ?">
