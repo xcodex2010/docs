@@ -68,7 +68,7 @@
     },
     "/v2/coins": {
       "get": {
-        "description": "This returns the list of coins, available for exchange with selected coin at given time, or gets entire list of coins. Each coin entry contains an array of networks.\nResponse also contains such parameters as extra id name, if it exists. For example, destination tag for Ripple, message for XEM or payment id for Monero. In addition, it provides icon links.",
+        "description": "This returns the list of coins, available for exchange with selected coin at given time, or gets entire list of coins. **Each coin entry contains an array of networks.**\nResponse also contains such parameters as extra id name, if it exists. For example, destination tag for Ripple, message for XEM or payment id for Monero. In addition, it provides icon links.",
         "responses": {
           "200": {
             "description": "Coins response",
@@ -918,7 +918,7 @@
         "properties": {
           "code": {
             "description": "Coin short name (code)",
-            "example": "ETH-BEP20",
+            "example": "ETH",
             "type": "string"
           },
           "name": {
