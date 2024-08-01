@@ -3,15 +3,33 @@ title: Introducing LetsExchange API
 description: ''
 ---
 
-LetsExchange API ver.1 allows you to get programming access to the services the LetsExchange multi-currency exchange service.
-Some of the requests have such parameters as 'coin_from' or ‘coin_to’, which a coin ticker in uppercase.
-Examples: ‘BTC’, ‘ETH’, ‘XMR’, ‘IOTA’, ‘CLOAK’. This list is constantly growing as we’re adding new coins.
-All requests need to be executed using HTTPS, this is a security measure.
+LetsExchange is the instant exchange platform supporting the largest number of cryptocurrencies in the market.
 
-Extra ID is an additional field for the wallet addresses of currencies that may use an additional ID for transaction
-processing (XRP, STEEM/SBD, XLM, DCT, XEM, XMR). This parameter should be filled only if the coin has this additional identifier.
-In any other case this parameter is not filled or not sent at all. All requests need to be executed using HTTPS,
-this is a security measure.
+LetsExchange API gives our partners programming access to the LetsExchange crypto exchange functionality, enabling in-app crypto swaps.
+
+This is the best solution for crypto wallets, aggregators, portfolio apps, payment providers, and other crypto businesses.
+
+With LetsExchange API integration, you can:
+- Get additional income source
+- Increase the number of supported cryptocurrencies
+- Prevent exchange rate manipulations from other swap service providers
+- Enhance crypto exchange function stability
+- Deepen the liquidity level
+- Create a better user experience
+- Increase users' retention level.
+
+
+# Basics
+
+1. For security reasons, all requests need to be executed using HTTPS.
+2. Requests with parameters such as "coin_from" or "coin_to" require a coin ticker in uppercase. Examples: "BTC," "ETH," "XMR."
+3. "Extra ID" is an additional field for addresses of currencies that may use an additional ID for transaction processing, e.g.:
+    - XRP (XRP) uses an ID named "Destination Tag."
+    - Monero (XMR) uses an ID named "Payment ID."
+    - Stellar (XML) uses an ID named "Memo."
+4. This parameter should be filled only if the coin has this additional identifier. In any other case, this parameter is not filled out or sent.
+5. The list of supported cryptocurrencies is constantly growing as we add new coins.
+
 
 <Card
     title="Reference APIs"

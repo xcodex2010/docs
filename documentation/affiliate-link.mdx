@@ -3,20 +3,22 @@ title: Affiliate Program
 description: ''
 ---
 
-Affiliate link is a unique string through which the partner earns profit (the accrued profit can be checked in the personal
-account) by passing this parameter string (affiliate_id) when creating an exchange. This parameter needs to be passed
-with each rate calculation request and exchange creation. Multiple affiliate_ids can be used to understand the source
-of user traffic.
+LetsExchange partners who have integrated API receive income from every exchange their users make.
 
-To create an affiliate link, you need to [log in to your account on our website](https://my.letsexchange.io/auth/login)
-and go to the **Affiliate Program** section.
+The basic revenue share is **0.2%** of the exchange amount. However, partners can set a different revenue share based on their business goals.
 
-After that, you will have the option to create an **Affiliate link** or **Widget and button**.
-Once you create an **Affiliate link**, you will see it added to your list, and by clicking on it,
-you will see its **ID**. It will be displayed as `ref_id=tKxRGxxxx78xloBL`.
+To record the user's exchange and income for the partner, the **affiliate_id** (ref_id) parameter must be sent with each request for calculating the rate and creating an exchange.
 
-<Warning>`tKxRGxxxx78xloBL` - will be your affiliate ID that you need to include in the rate calculation and exchange creation requests.</Warning>
+When using multiple sources of user traffic, you can create multiple **affiliate_ids** for each of them.
 
-If you do not want to implement your own widget from scratch and deal with the specifics of working with the API,
-you can generate a custom **Widget** or **Button** and place it on your website by adding a small script that
-will be displayed to you. Users will create exchanges, and you will earn profit from this.
+All information on all exchanges and the amount of income is available in the personal account on LetsExchange.
+
+To **create an affiliate_id**, you need to [log into your account](https://my.letsexchange.io/auth/login) and go to the **Affiliate Program** section.
+
+Next, in the "Referral Links" menu you need to create a new link. Once you create an affiliate link, you will see it added to your list. By clicking on it, you will see its ID. It will be displayed as `ref_id=tKxRGxxxx78xloBL`.
+Need more information? – Visit this [page](https://letsexchange.io/blog/how-to-get-your-affiliate-id/).
+
+<Warning>`tKxRGxxxx78xloBL` will be the **affiliate ID** that you need to include in the rate calculation and exchange creation requests.</Warning>
+
+<Note>You can also create and customize a cryptocurrency exchange widget that can be integrated into your website or app using an iframe.
+    You can read more about this [here](https://letsexchange.io/blog/how-to-create-your-own-exchange-widget/).</Note>

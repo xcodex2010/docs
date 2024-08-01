@@ -21,7 +21,7 @@
   "paths": {
     "/v1/coins": {
       "get": {
-        "description": "This returns the list of coins, available for exchange with selected coin at given time, or gets entire list of coins.\nResponse also contains such parameters as extra id name, if it exists. For example, destination tag for Ripple, message for XEM or payment id for Monero. In addition, it provides icon links.",
+        "description": "This returns the list of coins available for exchange with the selected coin at a given time or sends the entire list of coins. \nThe response also contains parameters such as the “extra ID”, if applicable for a specific cryptocurrency, for example, the Destination Tag for XRP (XRP). \n\nIn addition, the response provides icon links.\n",
         "responses": {
           "200": {
             "description": "Coins response",
@@ -68,7 +68,7 @@
     },
     "/v2/coins": {
       "get": {
-        "description": "This returns the list of coins, available for exchange with selected coin at given time, or gets entire list of coins. **Each coin entry contains an array of networks.**\nResponse also contains such parameters as extra id name, if it exists. For example, destination tag for Ripple, message for XEM or payment id for Monero. In addition, it provides icon links.",
+        "description": "This returns the list of coins available for exchange with a selected coin at a given time or the entire list of coins. Each coin entry contains an array of networks. \n\nThe response also contains parameters such as the “extra ID”, if applicable for a specific cryptocurrency, for example, the Destination Tag for XRP (XRP). \n\nIn addition, the response provides icon links.\n",
         "responses": {
           "200": {
             "description": "Coins response",
@@ -116,7 +116,7 @@
 
     "/v1/info": {
       "post": {
-        "description": "Gets current rate, calculates final amount that user will get, and also it sets minimum and maximum amounts for deposit.",
+        "description": "It returns the current rate, calculates the final amount that the user will receive, and sets the minimum and maximum amounts for deposits.",
         "requestBody": {
           "description": "",
           "content": {
@@ -204,7 +204,7 @@
 
     "/v1/info-revert": {
       "post": {
-        "description": "This method is used when you want to get the exact amount of specific coins.\nFor example, when a customer needs to pay the bill with 5 XMR (coin ‘to’), and he needs to know how much BTC (coin ‘from’) he should send.\nThe request gets current rate, calculates the amount of coins that user should send to receive the desired amount of ‘target’ currency, and also it sets the minimum and the maximum amounts for the deposit.",
+        "description": "You can use this API to get the exact amount of specific coins. \n\nFor example, when a customer needs to pay the bill with 5 XMR (“coin to”), and he needs to know how much BTC (“coin from”) he should send. The request gives the current rate and calculates the amount of coins a user should send to receive the desired amount of a “target” cryptocurrency. It also sets the minimum and the maximum amounts for the deposit.",
         "requestBody": {
           "description": "",
           "content": {
@@ -369,7 +369,7 @@
 
     "/v1/transaction": {
       "post": {
-        "description": "This call allows to request creating an exchange transaction. You choose coin pair you’d like to exchange, provide sender’s withdrawal address and specify amount of coins you want to swap. Letsexchange.io returns address and extra id (if needed) to deposit to, final amount, fee and some other parameters.\n\n**To receive affiliate bonuses from transaction, the next parameter should be Included in the API query: `affiliate_id`.**",
+        "description": "This call allows you to request creation of an exchange. You choose the coin pair you’d like to exchange, provide the sender’s withdrawal address, and specify the amount of coins you want to swap. Letsexchange.io returns the address and extra ID (if needed) for a deposit, final amount, fee, and other parameters.\n\n**To receive an affiliate fee from a transaction, the API query must include the following parameter: `affiliate_id`.**",
         "requestBody": {
           "description": "",
           "content": {
@@ -457,7 +457,7 @@
 
     "/v1/transaction-revert": {
       "post": {
-        "description": "Same as Create Transaction, but without `deposit_amount` and required `withdrawal_amount`.",
+        "description": "It is the same as Create Transaction but without `deposit_amount` and required `withdrawal_amount`.",
         "requestBody": {
           "description": "",
           "content": {
@@ -633,7 +633,7 @@
 
     "/v1/transaction/{id}": {
       "get": {
-        "description": "Gets detailed information about a single transaction. One of returned parameters is ‘rate’, which is current rate offered by letsexchange.io. It may differ from market rate, and also may change rapidly depending on the markets.",
+        "description": "It gives detailed information about a single transaction. One of the returned parameters is `rate` which is the current rate offered by LetsExchange. It may differ from the market rate and change rapidly depending on the market situation.",
         "parameters": [{
           "in": "path",
           "name": "id",
@@ -702,7 +702,7 @@
 
     "/v1/transactions-list": {
       "get": {
-        "description": "Gets detailed information about transactions.",
+        "description": "It returns detailed information about transactions.",
         "parameters": [{
           "in": "query",
           "name": "ids[]",
@@ -711,7 +711,7 @@
             "items": {
               "type": "string"
             },
-            "description": "Transactions ids array assigned by letsexchange.io. \n\n **Use it right way - `?ids[]=be0c5f84c667c5&ids[]=f8c664be0c57c5&ids[]=57c664be5..`**",
+            "description": "Transactions IDs array assigned by LetsExchange. \n\n Use it right way -  \n\n`?ids[]=be0c5f84ccc&ids[]=f8c6v4..`",
             "example": "599cd4bb4d4a5"
           },
           "required": true
@@ -763,7 +763,7 @@
 
     "/v1/transaction/{id}/status": {
       "get": {
-        "description": "Allows to check the current status of the transaction as a string.",
+        "description": "Allows the current status of the transaction to be checked as a string.",
         "parameters": [{
           "in": "path",
           "name": "id",
@@ -881,7 +881,7 @@
             "type": "string"
           },
           "has_extra": {
-            "description": "`1` if coin may have an extra ID in addition to the address,`0` if it doesn’t",
+            "description": "`1` f the coin has an extra ID in addition to the address, `0` if it doesn’t",
             "example": 1,
             "type": "number"
           },
@@ -892,17 +892,17 @@
             "type": "string"
           },
           "additional_info_get": {
-            "description": "Additional info for get coin",
+            "description": "Additional info for a coin to get",
             "example": "Due to network requirements, the exchange will be processed after 500 confirmations of your deposit transaction.",
             "type": "string"
           },
           "additional_info_send": {
-            "description": "Additional info for send coin",
+            "description": "Additional info for a coin to send",
             "example": "Please note that token has migrated to the new Binance Chain contact address",
             "type": "string"
           },
           "explorer": {
-            "description": "Currency blockchain explorer URL. It is used for checking transaction status in block explorer",
+            "description": "Cryptocurrency blockchain explorer URL is used to check transaction status in a block explorer",
             "example": "https://pacific-explorer.manta.network/",
             "type": "string"
           },
@@ -942,12 +942,12 @@
             "type": "string"
           },
           "additional_info_get": {
-            "description": "Additional info for get coin",
+            "description": "Additional info for a coin to get",
             "example": "Due to network requirements, the exchange will be processed after 500 confirmations of your deposit transaction.",
             "type": "string"
           },
           "additional_info_send": {
-            "description": "Additional info for send coin",
+            "description": "Additional info for a coin to send",
             "example": "Please note that token has migrated to the new Binance Chain contact address",
             "type": "string"
           },
@@ -982,7 +982,7 @@
                   "type": "number"
                 },
                 "has_extra": {
-                  "description": "`1` if coin may have an extra ID in addition to the address,`0` if it doesn’t",
+                  "description": "`1` f the coin has an extra ID in addition to the address, `0` if it doesn’t",
                   "example": 1,
                   "type": "number"
                 },
@@ -993,7 +993,7 @@
                   "type": "string"
                 },
                 "explorer": {
-                  "description": "Currency blockchain explorer URL. It is used for checking transaction status in block explorer",
+                  "description": "Cryptocurrency blockchain explorer URL is used to check transaction status in a block explorer",
                   "example": "https://pacific-explorer.manta.network/",
                   "type": "string"
                 },
@@ -1041,12 +1041,12 @@
             "type": "string"
           },
           "network_from": {
-            "description": "Code for `from` network currency",
+            "description": "Code for a cryptocurrency network of a coin a user will send",
             "example": "BTC",
             "type": "string"
           },
           "network_to": {
-            "description": "Code for `to` network currency",
+            "description": "Code for a cryptocurrency network of a coin to get",
             "example": "TRC20",
             "type": "string"
           },
@@ -1056,7 +1056,7 @@
             "type": "number"
           },
           "promocode": {
-            "description": "Is transaction with promocode",
+            "description": "Is a transaction with a promo code",
             "example": "promocodeExample",
             "type": "string"
           },
@@ -1076,17 +1076,17 @@
         "type": "object",
         "properties": {
           "min_amount": {
-            "description": "Minimum possible amount to be sent",
+            "description": "The minimum possible amount to be sent",
             "example": "0.002",
             "type": "string"
           },
           "max_amount": {
-            "description": "Maximum possible amount to be sent; usually we do not have upper limits",
+            "description": "The maximum possible amount to be sent",
             "example": "1500",
             "type": "string"
           },
           "amount": {
-            "description": "The final amount that user will receive after the exchange",
+            "description": "The final amount a user will receive after the exchange",
             "example": "6004.36459183",
             "type": "string"
           },
@@ -1096,18 +1096,18 @@
             "type": "string"
           },
           "rate": {
-            "description": "Current exchange rate offered by letsexchange.io",
+            "description": "The current exchange rate offered by LetsExchange",
             "example": "60102.709354577579216",
             "type": "string"
           },
           "profit": {
-            "description": "Promo code bonus value in BTC coin. If promo code was used.",
+            "description": "If a promo code was used, a bonus value in BTC",
             "example": "13",
             "nullable": true,
             "type": "string"
           },
           "withdrawal_fee": {
-            "description": "Withdrawal fee specified in the `to` currency",
+            "description": "The withdrawal fee is specified in the currency a user gets",
             "example": "5.90634362",
             "type": "string"
           },
@@ -1118,7 +1118,7 @@
             "type": "string"
           },
           "rate_id_expired_at": {
-            "description": "Rate ID expired at value on milliseconds",
+            "description": "The timestamp (in milliseconds) when the received rate will expire",
             "example": "1719396641906",
             "nullable": true,
             "type": "string"
@@ -1148,22 +1148,22 @@
             "type": "string"
           },
           "network_from": {
-            "description": "Code for `from` network currency",
+            "description": "Code for a cryptocurrency network of a coin a user will send",
             "example": "TRC20",
             "type": "string"
           },
           "network_to": {
-            "description": "Code for `to` network currency",
+            "description": "Code for a cryptocurrency network of a coin to get",
             "example": "ETH",
             "type": "string"
           },
           "amount": {
-            "description": "Amount of currency `to`",
+            "description": "An amount of a coin to get",
             "example": "0.5",
             "type": "number"
           },
           "promocode": {
-            "description": "Is transaction with promocode",
+            "description": "Is a transaction with a promo code",
             "example": "promocodeExample",
             "type": "string"
           },
@@ -1178,17 +1178,17 @@
         "type": "object",
         "properties": {
           "min_amount": {
-            "description": "Minimum possible amount to be sent",
+            "description": "The minimum possible amount to be sent",
             "example": "0.002",
             "type": "string"
           },
           "max_amount": {
-            "description": "Maximum possible amount to be sent; usually we do not have upper limits",
+            "description": "The maximum possible amount to be sent",
             "example": "27000",
             "type": "string"
           },
           "amount": {
-            "description": "The `from` amount the user must send to receive the amount from the request `amount`",
+            "description": "The amount a user must send to receive the amount from the `amount` request",
             "example": "1725.45941279",
             "type": "string"
           },
@@ -1198,18 +1198,18 @@
             "type": "string"
           },
           "rate": {
-            "description": "Current exchange rate offered by letsexchange.io",
+            "description": "The current exchange rate offered by LetsExchange",
             "example": "0.000290844400000",
             "type": "string"
           },
           "profit": {
-            "description": "Promocode bonus value in BTC coin",
+            "description": "If a promo code was used, a bonus value in BTC",
             "example": "13",
             "nullable": true,
             "type": "string"
           },
           "withdrawal_fee": {
-            "description": "Withdrawal fee specified in the `to` currency",
+            "description": "The withdrawal fee is specified in the currency a user gets.",
             "example": "5.90634362",
             "type": "string"
           },
@@ -1220,7 +1220,7 @@
             "type": "string"
           },
           "rate_id_expired_at": {
-            "description": "Rate ID expired at value on milliseconds",
+            "description": "The timestamp (in milliseconds) when the received rate will expire",
             "example": "1719396641906",
             "nullable": true,
             "type": "string"
@@ -1247,7 +1247,7 @@
             "type": "string"
           },
           "coins": {
-            "description": "You will get coins rates with pairs from intersections between that list. **Limit 50 coins per query!**",
+            "description": "You will get coins rates with pairs from intersections between that list. **The limit is 50 coins per query.**",
             "example": ["BTC", "USDT", "ETH"],
             "type": "array",
             "items": {
@@ -1270,27 +1270,27 @@
             "type": "string"
           },
           "network_from": {
-            "description": "Code for `from` network currency",
+            "description": "Code for a cryptocurrency network of a coin a user will send",
             "example": "ARBITRUM",
             "type": "string"
           },
           "network_to": {
-            "description": "Code for `to` network currency",
+            "description": "Code for a cryptocurrency network of a coin to get",
             "example": "BTC",
             "type": "string"
           },
           "rate": {
-            "description": "Current exchange rate offered by letsexchange.io",
+            "description": "The current exchange rate offered by LetsExchange",
             "example": "60102.709354577579216",
             "type": "string"
           },
           "min_amount": {
-            "description": "Minimum possible amount to be sent",
+            "description": "The minimum possible amount to be sent",
             "example": "0.002",
             "type": "string"
           },
           "max_amount": {
-            "description": "Maximum possible amount to be sent; usually we do not have upper limits",
+            "description": "The maximum possible amount to be sent",
             "example": "1500",
             "type": "string"
           },
@@ -1305,7 +1305,7 @@
             "type": "string"
           },
           "rate_id_expired_at": {
-            "description": "Rate ID expired at value on milliseconds",
+            "description": "The timestamp (in milliseconds) when the received rate will expire",
             "example": "1719396641906",
             "type": "string"
           }
@@ -1342,38 +1342,38 @@
             "type": "string"
           },
           "network_from": {
-            "description": "Code for `coin_from` network currency",
+            "description": "Code for a cryptocurrency network of a coin a user will send",
             "example": "BTC",
             "type": "string"
           },
           "network_to": {
-            "description": "Code for `coin_to` network currency",
+            "description": "Code for a cryptocurrency network of a coin to get",
             "example": "TRC20",
             "type": "string"
           },
           "deposit_amount": {
-            "description": "Amount to be exchanged in `coin_from` value",
+            "description": "The amount of coins to be exchanged is specified by a user",
             "example": 0.01,
             "type": "number"
           },
           "withdrawal": {
-            "description": "Destination address, it is used for sending exchanged coins",
+            "description": "The destination address. LetsExchange will send the exchanged coins to this address",
             "example": "TR7NHqjeKQxGTCi8q8ZY4txxxSzgjLj6t",
             "type": "string"
           },
           "withdrawal_extra_id": {
-            "description": "Additional ID for destination wallet addresses of currencies that use extra ID for transaction processing. **Must be presented as at least an empty string**",
+            "description": "Additional ID for destination wallet addresses for currencies that use extra ID for transaction processing. The field should be empty if an extra ID is not provided for a given cryptocurrency. **A request without this field is not allowed.**",
             "example": "",
             "type": "string"
           },
           "return": {
-            "description": "The address user sends coins from, or another one that may be used as a refund address, if it is necessary",
+            "description": "A user's address he sent coins from or another one that may be used as a refund address if it is necessary",
             "example": "bc1qxygdygjrs2kzq2n0qtyrf2111pxxxxxxxwl0h",
             "nullable": true,
             "type": "string"
           },
           "return_extra_id": {
-            "description": "The address user sends coins from, or another one that may be used as a refund address, if it is necessary",
+            "description": "An extra ID for a user's address he sent coins from or another one that may be used as a refund address if it is necessary",
             "example": "",
             "nullable": true,
             "type": "string"
@@ -1384,7 +1384,7 @@
             "type": "string"
           },
           "promocode": {
-            "description": "Is transaction with promocode",
+            "description": "Is a transaction with a promo code",
             "example": "promocodeExample",
             "nullable": true,
             "type": "string"
@@ -1405,7 +1405,7 @@
             "type": "string"
           },
           "status": {
-            "description": "Transaction status is used to notify user about progress of the exchange process. [See *transaction statuses for detailed description](/documentation/statuses)",
+            "description": "Transaction status is used to notify a user about the progress of the exchange process. See [transaction statuses for a detailed description](/documentation/statuses)",
             "example": "wait",
             "type": "string"
           },
@@ -1440,39 +1440,39 @@
             "type": "string"
           },
           "deposit_amount": {
-            "description": "Amount of coins to be exchanged, specified by user",
+            "description": "The amount of coins to be exchanged is specified by a user",
             "example": "0.01",
             "type": "string"
           },
           "withdrawal_amount": {
-            "description": "This is expected amount that user will receive when exchange is completed",
+            "description": "This is the expected amount that a user will receive when an exchange is completed",
             "example": "595.94740104",
             "type": "string"
           },
           "deposit": {
-            "description": "Deposit address to which user sends the currency",
+            "description": "The deposit address to which a user must send the coins",
             "example": "bc1efvrjjxxxx9nzzzcuzhqdxxxwe0wxx",
             "type": "string"
           },
           "deposit_extra_id": {
-            "description": "Additional ID for deposit wallet addresses of currencies that use extra ID for transaction processing. **Important: sending coins without using extra id (when it is provided) may result in money loss!**",
+            "description": "Additional ID for deposit addresses for cryptocurrencies that use extra ID for transaction processing. **Important: sending coins without using extra ID (when it is provided) may result in loss of funds!**",
             "example": null,
             "nullable": true,
             "type": "string"
           },
           "withdrawal": {
-            "description": "Destination address, it is used for sending exchanged coins",
+            "description": "The destination address. LetsExchange will send the exchanged coins to this address",
             "example": "TR7NHqjeKQxGTCi8q8ZY4txxxSzgjLj6t",
             "type": "string"
           },
           "withdrawal_extra_id": {
-            "description": "Additional ID for destination wallet addresses of currencies that use extra ID for transaction processing",
+            "description": "Additional ID for destination wallet addresses for currencies that use extra ID for transaction processing. The field should be empty if an extra ID is not provided for a given cryptocurrency. **A request without this field is not allowed.**",
             "example": "",
             "nullable": true,
             "type": "string"
           },
           "rate": {
-            "description": "Current exchange rate offered by letsexchange.io",
+            "description": "The current exchange rate offered by LetsExchange",
             "example": "60186.054837423674181",
             "type": "string"
           },
@@ -1482,7 +1482,7 @@
             "type": "string"
           },
           "return": {
-            "description": "The address user sends coins from, or another one that may be used as a refund address, if it is necessary",
+            "description": "A user's address he sent coins from or another one that may be used as a refund address if it is necessary",
             "example": "",
             "nullable": true,
             "type": "string"
@@ -1511,12 +1511,12 @@
             "type": "boolean"
           },
           "coin_from_explorer_url": {
-            "description": "Coin `from` explorer url",
+            "description": "An explorer URL for a cryptocurrency to send",
             "example": "https://blockchair.com/bitcoin/transaction/",
             "type": "string"
           },
           "coin_to_explorer_url": {
-            "description": "Coin `to` explorer url",
+            "description": "An explorer URL for a cryptocurrency to get",
             "example": "https://tronscan.org/#/transaction/",
             "type": "string"
           },
@@ -1526,7 +1526,7 @@
             "type": "number"
           },
           "aml_error_signals": {
-            "description": "List of AML signals, when status is [aml_check_failed](/documentation/statuses#aml-check-failed)",
+            "description": "List of AML signals when the status is [aml_check_failed](/documentation/statuses#aml-check-failed)",
             "example": [{
               "signal":"mixingService",
               "signalId":24,
@@ -1569,12 +1569,12 @@
             "type": "string"
           },
           "network_from": {
-            "description": "Code for `coin_from` network currency",
+            "description": "Code for a cryptocurrency network of a coin a user will send",
             "example": "BTC",
             "type": "string"
           },
           "network_to": {
-            "description": "Code for `coin_to` network currency",
+            "description": "Code for a cryptocurrency network of a coin to get",
             "example": "TRC20",
             "type": "string"
           },
@@ -1584,7 +1584,7 @@
             "type": "number"
           },
           "withdrawal": {
-            "description": "Destination address, it is used for sending exchanged coins",
+            "description": "The destination address. LetsExchange will send the exchanged coins to this address",
             "example": "TR7NHqjeKQxGTCi8q8ZY4txxxSzgjLj6t",
             "type": "string"
           },
@@ -1594,7 +1594,7 @@
             "type": "string"
           },
           "return": {
-            "description": "The address user sends coins from, or another one that may be used as a refund address, if it is necessary",
+            "description": "A user's address he sent coins from or another one that may be used as a refund address if it is necessary",
             "example": "bc1qxygdygjrs2kzq2n0qtyrf2111pxxxxxxxwl0h",
             "nullable": true,
             "type": "string"
@@ -1626,7 +1626,7 @@
             "type": "string"
           },
           "status": {
-            "description": "Transaction status is used to notify user about progress of the exchange process. [See *transaction statuses for detailed description](/documentation/statuses)",
+            "description": "Transaction status is used to notify a user about the progress of the exchange process. See [transaction statuses for a detailed description](/documentation/statuses)",
             "example": "wait",
             "type": "string"
           },
@@ -1661,39 +1661,39 @@
             "type": "string"
           },
           "deposit_amount": {
-            "description": "Amount of coins to be exchanged, specified by user",
+            "description": "The amount of coins to be exchanged is specified by a user",
             "example": "0.01",
             "type": "string"
           },
           "withdrawal_amount": {
-            "description": "This is expected amount that user will receive when exchange is completed",
+            "description": "This is the expected amount that a user will receive when an exchange is completed",
             "example": "595.94740104",
             "type": "string"
           },
           "deposit": {
-            "description": "Deposit address to which user sends the currency",
+            "description": "The deposit address to which a user must send the coins",
             "example": "bc1efvrjjxxxx9nzzzcuzhqdxxxwe0wxx",
             "type": "string"
           },
           "deposit_extra_id": {
-            "description": "Additional ID for deposit wallet addresses of currencies that use extra ID for transaction processing. **Important: sending coins without using extra id (when it is provided) may result in money loss!**",
+            "description": "Additional ID for deposit addresses for cryptocurrencies that use extra ID for transaction processing. **Important: sending coins without using extra ID (when it is provided) may result in loss of funds!**",
             "example": null,
             "nullable": true,
             "type": "string"
           },
           "withdrawal": {
-            "description": "Destination address, it is used for sending exchanged coins",
+            "description": "The destination address. LetsExchange will send the exchanged coins to this address",
             "example": "TR7NHqjeKQxGTCi8q8ZY4txxxSzgjLj6t",
             "type": "string"
           },
           "withdrawal_extra_id": {
-            "description": "Additional ID for destination wallet addresses of currencies that use extra ID for transaction processing",
+            "description": "Additional ID for destination wallet addresses for currencies that use extra ID for transaction processing. The field should be empty if an extra ID is not provided for a given cryptocurrency. **A request without this field is not allowed.**",
             "example": "",
             "nullable": true,
             "type": "string"
           },
           "rate": {
-            "description": "Current exchange rate offered by letsexchange.io",
+            "description": "The current exchange rate offered by LetsExchange",
             "example": "60186.054837423674181",
             "type": "string"
           },
@@ -1703,7 +1703,7 @@
             "type": "string"
           },
           "return": {
-            "description": "The address user sends coins from, or another one that may be used as a refund address, if it is necessary",
+            "description": "A user's address he sent coins from or another one that may be used as a refund address if it is necessary",
             "example": "",
             "nullable": true,
             "type": "string"
@@ -1732,12 +1732,12 @@
             "type": "boolean"
           },
           "coin_from_explorer_url": {
-            "description": "Coin `from` explorer url",
+            "description": "An explorer URL for a cryptocurrency to send",
             "example": "https://blockchair.com/bitcoin/transaction/",
             "type": "string"
           },
           "coin_to_explorer_url": {
-            "description": "Coin `to` explorer url",
+            "description": "An explorer URL for a cryptocurrency to get",
             "example": "https://tronscan.org/#/transaction/",
             "type": "string"
           },
@@ -1747,7 +1747,7 @@
             "type": "number"
           },
           "aml_error_signals": {
-            "description": "List of AML signals, when status is [aml_check_failed](/documentation/statuses#aml-check-failed)",
+            "description": "List of AML signals when the status is [aml_check_failed](/documentation/statuses#aml-check-failed)",
             "example": [{
               "signal":"mixingService",
               "signalId":24,
@@ -1792,7 +1792,7 @@
             "type": "string"
           },
           "status": {
-            "description": "Transaction status is used to notify user about progress of the exchange process. [See *transaction statuses for detailed description](/documentation/statuses)",
+            "description": "Transaction status is used to notify a user about the progress of the exchange process. See [transaction statuses for a detailed description](/documentation/statuses)",
             "example": "wait",
             "type": "string"
           },
@@ -1827,12 +1827,12 @@
             "type": "string"
           },
           "deposit_amount": {
-            "description": "Amount of coins to be exchanged, specified by user",
+            "description": "The amount of coins to be exchanged is specified by a user",
             "example": "0.01",
             "type": "string"
           },
           "withdrawal_amount": {
-            "description": "This is expected amount that user will receive when exchange is completed",
+            "description": "This is the expected amount that a user will receive when an exchange is completed",
             "example": "595.94740104",
             "type": "string"
           },
@@ -1842,34 +1842,34 @@
             "type": "string"
           },
           "real_withdrawal_amount": {
-            "description": "If the received deposit is different, the final amount is being recalculated using the same rate",
+            "description": "If the received deposit differs from the initial amount, the final amount is recalculated using the same rate",
             "example": "0.0098743",
             "type": "string"
           },
           "deposit": {
-            "description": "Deposit address to which user sends the currency",
+            "description": "The deposit address to which a user must send the coins",
             "example": "bc1efvrjjxxxx9nzzzcuzhqdxxxwe0wxx",
             "type": "string"
           },
           "deposit_extra_id": {
-            "description": "Additional ID for deposit wallet addresses of currencies that use extra ID for transaction processing. **Important: sending coins without using extra id (when it is provided) may result in money loss!**",
+            "description": "Additional ID for deposit addresses for cryptocurrencies that use extra ID for transaction processing. **Important: sending coins without using extra ID (when it is provided) may result in loss of funds!**",
             "example": null,
             "nullable": true,
             "type": "string"
           },
           "withdrawal": {
-            "description": "Destination address, it is used for sending exchanged coins",
+            "description": "The destination address. LetsExchange will send the exchanged coins to this address",
             "example": "TR7NHqjeKQxGTCi8q8ZY4txxxSzgjLj6t",
             "type": "string"
           },
           "withdrawal_extra_id": {
-            "description": "Additional ID for destination wallet addresses of currencies that use extra ID for transaction processing",
+            "description": "Additional ID for destination wallet addresses for currencies that use extra ID for transaction processing. The field should be empty if an extra ID is not provided for a given cryptocurrency. **A request without this field is not allowed.**",
             "example": "",
             "nullable": true,
             "type": "string"
           },
           "rate": {
-            "description": "Current exchange rate offered by letsexchange.io",
+            "description": "The current exchange rate offered by LetsExchange",
             "example": "60186.054837423674181",
             "type": "string"
           },
@@ -1889,7 +1889,7 @@
             "type": "string"
           },
           "return": {
-            "description": "The address user sends coins from, or another one that may be used as a refund address, if it is necessary",
+            "description": "A user's address he sent coins from or another one that may be used as a refund address if it is necessary",
             "example": "",
             "nullable": true,
             "type": "string"
@@ -1918,12 +1918,12 @@
             "type": "boolean"
           },
           "coin_from_explorer_url": {
-            "description": "Coin `from` explorer url",
+            "description": "An explorer URL for a cryptocurrency to send",
             "example": "https://blockchair.com/bitcoin/transaction/",
             "type": "string"
           },
           "coin_to_explorer_url": {
-            "description": "Coin `to` explorer url",
+            "description": "An explorer URL for a cryptocurrency to get",
             "example": "https://tronscan.org/#/transaction/",
             "type": "string"
           },
@@ -1938,18 +1938,18 @@
             "type": "number"
           },
           "execution_time": {
-            "description": "The time in seconds spent on the exchange. It is measured from the moment funds are received until the output transaction is sent to the recipient’s wallet.",
+            "description": "It is the time spent on the exchange in seconds. The time is measured from the moment funds are received until the output transaction is sent to the recipient’s wallet",
             "example": 200,
             "type": "number"
           },
           "profit": {
-            "description": "Promocode bonus value in BTC coin",
+            "description": "If a promo code was used, a bonus value in BTC",
             "example": 0.01343595,
             "nullable": true,
             "type": "number"
           },
           "aml_error_signals": {
-            "description": "List of AML signals, when status is [aml_check_failed](/documentation/statuses#aml-check-failed)",
+            "description": "List of AML signals when the status is [aml_check_failed](/documentation/statuses#aml-check-failed)",
             "example": [{
               "signal":"mixingService",
               "signalId":24,
