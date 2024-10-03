@@ -36,6 +36,7 @@
         "documentation/introduction",
         "documentation/swap",
         "documentation/statuses",
+        "documentation/transaction-errors",
         "documentation/affiliate-link",
         "documentation/faq"
       ]
