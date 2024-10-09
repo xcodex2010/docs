@@ -1393,6 +1393,11 @@
             "description": "Affiliate ID",
             "example": "q1W2e3R4tEXAMPLE",
             "type": "string"
+          },
+          "partner_user_ip": {
+            "description": "End user IP address",
+            "example": "127.0.0.1",
+            "type": "string"
           }
         }
       },
@@ -1613,6 +1618,11 @@
           "affiliate_id": {
             "description": "Affiliate ID",
             "example": "q1W2e3R4tEXAMPLE",
+            "type": "string"
+          },
+          "partner_user_ip": {
+            "description": "End user IP address",
+            "example": "127.0.0.1",
             "type": "string"
           }
         }
