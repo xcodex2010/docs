@@ -290,7 +290,7 @@
       }
     },
 
-    "/v1/info-bulk": {
+    "/v1/info/bulk": {
       "post": {
         "description": "",
         "requestBody": {
