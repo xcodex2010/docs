@@ -56,20 +56,34 @@
           "pages": [
             "api-reference/endpoint/v1/coins/coins",
             "api-reference/endpoint/v2/coins/coins",
-            "api-reference/endpoint/v1/coins/info",
-            "api-reference/endpoint/v1/coins/info-revert",
             "api-reference/endpoint/v1/coins/info-bulk"
           ]
         },
         {
-          "group": "Transaction",
+          "group": "Create Swap",
           "pages": [
+            "api-reference/endpoint/v1/coins/info",
             "api-reference/endpoint/v1/transaction/create-transaction",
-            "api-reference/endpoint/v1/transaction/create-transaction-revert",
-            "api-reference/endpoint/v1/transaction/transaction-check-promocode",
+            "api-reference/endpoint/v1/coins/info-revert",
+            "api-reference/endpoint/v1/transaction/create-transaction-revert"
+          ]
+        },
+        {
+          "group": "Create Bridge",
+          "pages": [
+            "api-reference/endpoint/v1/coins/bridge/info",
+            "api-reference/endpoint/v1/transaction/bridge/create-transaction",
+            "api-reference/endpoint/v1/coins/bridge/info-revert",
+            "api-reference/endpoint/v1/transaction/bridge/create-transaction-revert"
+          ]
+        },
+        {
+          "group": "Get Transaction Info",
+          "pages": [
             "api-reference/endpoint/v1/transaction/get-transaction",
             "api-reference/endpoint/v1/transaction/get-transactions-list",
-            "api-reference/endpoint/v1/transaction/get-transaction-status"
+            "api-reference/endpoint/v1/transaction/get-transaction-status",
+            "api-reference/endpoint/v1/transaction/transaction-check-promocode"
           ]
         }
       ]

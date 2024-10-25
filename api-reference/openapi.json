@@ -290,6 +290,182 @@
       }
     },
 
+    "/v1/bridge/info": {
+      "post": {
+        "description": "It returns the current rate for a crypto bridge across two specific networks, calculates the final amount that the user will receive, and provides minimum and maximum deposit amounts.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CoinBridgeInfoRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Coin Bridge Info response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CoinBridgeInfoResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Wrong API key in Bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WrongAPITokenError"
+                },
+                "example": {
+                  "error": "Wrong number of segments"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Rate is not available for this pair."
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": {
+                    "validation": {
+                      "withdrawal_amount": "Min amoun: 0.002"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Internal error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/v1/bridge/info-revert": {
+      "post": {
+        "description": "You can use this API when a user wants to get the exact amount of a specific token.\nFor example, when your customer needs 1000 USDT TRC20 and wants to know how much USDT ERC20 (“coin”) he should send, you can provide him with the needed information using this call. The request gives the current rate to bridge crypto between two selected networks and calculates the number of tokens a user should send to receive the desired amount of the token. It also sets the minimum and maximum amounts for the deposit.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CoinBridgeInfoRevertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Coin Bridge Info Revert response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CoinBridgeInfoRevertResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Wrong API key in Bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WrongAPITokenError"
+                },
+                "example": {
+                  "error": "Wrong number of segments"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Rate is not available for this pair."
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": {
+                    "validation": {
+                      "withdrawal_amount": "Min amoun: 0.002"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Internal error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
     "/v1/info/bulk": {
       "post": {
         "description": "",
@@ -476,6 +652,182 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CreateTransactionRevertResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Wrong API key in Bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WrongAPITokenError"
+                },
+                "example": {
+                  "error": "Wrong number of segments"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Rate is not available for this pair."
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": {
+                    "validation": {
+                      "withdrawal_extra_id": "The withdrawal extra id field must be present."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Internal error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/v1/bridge/transaction": {
+      "post": {
+        "description": "This call allows you to initiate a swap in bridge mode. You choose a token, the networks between which the token will move, provide the sender’s withdrawal address and specify the amount of crypto you want to swap. [Letsexchange.io](https://letsexchange.io) returns the deposit address, extra ID (if needed), final amount, fee, and other parameters.\n\n**To receive an affiliate fee from a transaction, the API query must include the following parameter: `affiliate_id`.**",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBridgeTransactionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Create Bridge Transaction response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBridgeTransactionResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Wrong API key in Bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WrongAPITokenError"
+                },
+                "example": {
+                  "error": "Wrong number of segments"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Rate is not available for this pair."
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": {
+                    "validation": {
+                      "withdrawal_extra_id": "The withdrawal extra id field must be present."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Internal error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/v1/bridge/transaction-revert": {
+      "post": {
+        "description": "This is similar to creating a transaction in the Bridge mode, but in this case, you can calculate the `deposit_amount` by specifying the `withdrawal_amount`.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBridgeTransactionRevertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Create Transaction Bridge Revert response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBridgeTransactionRevertResponse"
                 }
               }
             }
@@ -1228,6 +1580,188 @@
         }
       },
 
+      "CoinBridgeInfoRequest": {
+        "required": [
+          "coin",
+          "network_from",
+          "network_to",
+          "amount",
+          "affiliate_id"
+        ],
+        "type": "object",
+        "properties": {
+          "coin": {
+            "description": "Coin code to swap",
+            "example": "USDT",
+            "type": "string"
+          },
+          "network_from": {
+            "description": "Code for a cryptocurrency network of a coin a user will send",
+            "example": "BTC",
+            "type": "string"
+          },
+          "network_to": {
+            "description": "Code for a cryptocurrency network of a coin to get",
+            "example": "TRC20",
+            "type": "string"
+          },
+          "amount": {
+            "description": "An amount of a coin to send",
+            "example": 100.01,
+            "type": "number"
+          },
+          "affiliate_id": {
+            "description": "Affiliate ID",
+            "example": "q1W2e3R4tEXAMPLE",
+            "type": "string"
+          }
+        }
+      },
+      "CoinBridgeInfoResponse": {
+        "type": "object",
+        "properties": {
+          "min_amount": {
+            "description": "The minimum possible amount to be sent",
+            "example": "0.002",
+            "type": "string"
+          },
+          "max_amount": {
+            "description": "The maximum possible amount to be sent",
+            "example": "1500",
+            "type": "string"
+          },
+          "amount": {
+            "description": "The final amount a user will receive after the exchange",
+            "example": "6004.36459183",
+            "type": "string"
+          },
+          "fee": {
+            "description": "Service fee (in destination currency) **[DEPRECATED]**",
+            "example": "0",
+            "type": "string"
+          },
+          "rate": {
+            "description": "The current exchange rate offered by LetsExchange",
+            "example": "60102.709354577579216",
+            "type": "string"
+          },
+          "profit": {
+            "description": "If a promo code was used, a bonus value in BTC",
+            "example": "13",
+            "nullable": true,
+            "type": "string"
+          },
+          "withdrawal_fee": {
+            "description": "The withdrawal fee is specified in the currency a user gets",
+            "example": "5.90634362",
+            "type": "string"
+          },
+          "rate_id": {
+            "description": "Rate identifier for a FIXED rate flow",
+            "example": "646006ec-c1c7-482e-acb6-682e7674fd7e",
+            "nullable": true,
+            "type": "string"
+          },
+          "rate_id_expired_at": {
+            "description": "The timestamp (in milliseconds) when the received rate will expire",
+            "example": "1719396641906",
+            "nullable": true,
+            "type": "string"
+          }
+        }
+      },
+
+      "CoinBridgeInfoRevertRequest": {
+        "required": [
+          "coin",
+          "network_from",
+          "network_to",
+          "amount",
+          "affiliate_id"
+        ],
+        "type": "object",
+        "properties": {
+          "coin": {
+            "description": "Coin code to swap",
+            "example": "USDT",
+            "type": "string"
+          },
+          "network_from": {
+            "description": "Code for a cryptocurrency network of a coin a user will send",
+            "example": "BTC",
+            "type": "string"
+          },
+          "network_to": {
+            "description": "Code for a cryptocurrency network of a coin to get",
+            "example": "TRC20",
+            "type": "string"
+          },
+          "amount": {
+            "description": "An amount of a coin to get",
+            "example": 100.01,
+            "type": "number"
+          },
+          "affiliate_id": {
+            "description": "Affiliate ID",
+            "example": "q1W2e3R4tEXAMPLE",
+            "type": "string"
+          }
+        }
+      },
+      "CoinBridgeInfoRevertResponse": {
+        "type": "object",
+        "properties": {
+          "min_amount": {
+            "description": "The minimum possible amount to be sent",
+            "example": "0.002",
+            "type": "string"
+          },
+          "max_amount": {
+            "description": "The maximum possible amount to be sent",
+            "example": "27000",
+            "type": "string"
+          },
+          "amount": {
+            "description": "The amount a user must send to receive the amount from the `amount` request",
+            "example": "1725.45941279",
+            "type": "string"
+          },
+          "fee": {
+            "description": "Service fee (in destination currency) **[DEPRECATED]**",
+            "example": "0",
+            "type": "string"
+          },
+          "rate": {
+            "description": "The current exchange rate offered by LetsExchange",
+            "example": "0.000290844400000",
+            "type": "string"
+          },
+          "profit": {
+            "description": "If a promo code was used, a bonus value in BTC",
+            "example": "13",
+            "nullable": true,
+            "type": "string"
+          },
+          "withdrawal_fee": {
+            "description": "The withdrawal fee is specified in the currency a user gets.",
+            "example": "5.90634362",
+            "type": "string"
+          },
+          "rate_id": {
+            "description": "Rate identifier for a FIXED rate flow",
+            "example": "646006ec-c1c7-482e-acb6-682e7674fd7e",
+            "nullable": true,
+            "type": "string"
+          },
+          "rate_id_expired_at": {
+            "description": "The timestamp (in milliseconds) when the received rate will expire",
+            "example": "1719396641906",
+            "nullable": true,
+            "type": "string"
+          }
+        }
+      },
+
       "CoinInfoBulkRequest": {
         "required": [
           "float",
@@ -1628,6 +2162,439 @@
         }
       },
       "CreateTransactionRevertResponse": {
+        "type": "object",
+        "properties": {
+          "transaction_id": {
+            "description": "Unique identifier for transaction assigned by letsexchange.io",
+            "example": "599cd4bb4d4a5",
+            "type": "string"
+          },
+          "status": {
+            "description": "Transaction status is used to notify a user about the progress of the exchange process. See [transaction statuses for a detailed description](/documentation/statuses)",
+            "example": "wait",
+            "type": "string"
+          },
+          "coin_from": {
+            "description": "Coin to exchange `from`",
+            "example": "BTC",
+            "type": "string"
+          },
+          "coin_from_name": {
+            "description": "Coin to exchange `from` name",
+            "example": "Bitcoin",
+            "type": "string"
+          },
+          "coin_from_network": {
+            "description": "Coin to exchange `from` network",
+            "example": "BTC",
+            "type": "string"
+          },
+          "coin_to": {
+            "description": "Coin to exchange `to`",
+            "example": "USDT",
+            "type": "string"
+          },
+          "coin_to_name": {
+            "description": "Coin to exchange `to` name",
+            "example": "TetherUS",
+            "type": "string"
+          },
+          "coin_to_network": {
+            "description": "Coin to exchange `to` network",
+            "example": "TRC20",
+            "type": "string"
+          },
+          "deposit_amount": {
+            "description": "The amount of coins to be exchanged is specified by a user",
+            "example": "0.01",
+            "type": "string"
+          },
+          "withdrawal_amount": {
+            "description": "This is the expected amount that a user will receive when an exchange is completed",
+            "example": "595.94740104",
+            "type": "string"
+          },
+          "deposit": {
+            "description": "The deposit address to which a user must send the coins",
+            "example": "bc1efvrjjxxxx9nzzzcuzhqdxxxwe0wxx",
+            "type": "string"
+          },
+          "deposit_extra_id": {
+            "description": "Additional ID for deposit addresses for cryptocurrencies that use extra ID for transaction processing. **Important: sending coins without using extra ID (when it is provided) may result in loss of funds!**",
+            "example": null,
+            "nullable": true,
+            "type": "string"
+          },
+          "withdrawal": {
+            "description": "The destination address. LetsExchange will send the exchanged coins to this address",
+            "example": "TR7NHqjeKQxGTCi8q8ZY4txxxSzgjLj6t",
+            "type": "string"
+          },
+          "withdrawal_extra_id": {
+            "description": "Additional ID for destination wallet addresses for currencies that use extra ID for transaction processing. The field should be empty if an extra ID is not provided for a given cryptocurrency. **A request without this field is not allowed.**",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "rate": {
+            "description": "The current exchange rate offered by LetsExchange",
+            "example": "60186.054837423674181",
+            "type": "string"
+          },
+          "fee": {
+            "description": "Service fee (in destination currency) **[DEPRECATED]**",
+            "example": "0",
+            "type": "string"
+          },
+          "return": {
+            "description": "A user's address he sent coins from or another one that may be used as a refund address if it is necessary",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_hash": {
+            "description": "Hash for transaction refund",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_amount": {
+            "description": "Amount of transaction refund",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_extra_id": {
+            "description": "Additional ID for refund wallet addresses of currencies that use extra ID for transaction processing",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "is_float": {
+            "description": "Transaction FIXED or FLOAT",
+            "example": "true",
+            "type": "boolean"
+          },
+          "coin_from_explorer_url": {
+            "description": "An explorer URL for a cryptocurrency to send",
+            "example": "https://blockchair.com/bitcoin/transaction/",
+            "type": "string"
+          },
+          "coin_to_explorer_url": {
+            "description": "An explorer URL for a cryptocurrency to get",
+            "example": "https://tronscan.org/#/transaction/",
+            "type": "string"
+          },
+          "need_confirmations": {
+            "description": "Minimum number of confirmations to start the exchanging",
+            "example": 4,
+            "type": "number"
+          },
+          "aml_error_signals": {
+            "description": "List of AML signals when the status is [aml_check_failed](/documentation/statuses#aml-check-failed)",
+            "example": [{
+              "signal":"mixingService",
+              "signalId":24,
+              "signalPercent":95.6,
+              "level":4}
+            ],
+            "type": "array"
+          }
+        }
+      },
+
+      "CreateBridgeTransactionRequest": {
+        "required": [
+          "coin",
+          "network_from",
+          "network_to",
+          "deposit_amount",
+          "withdrawal",
+          "withdrawal_extra_id",
+          "affiliate_id"
+        ],
+        "type": "object",
+        "properties": {
+          "coin": {
+            "description": "Coin code to swap",
+            "example": "BTC",
+            "type": "string"
+          },
+          "network_from": {
+            "description": "Code for a cryptocurrency network of a coin a user will send",
+            "example": "BTC",
+            "type": "string"
+          },
+          "network_to": {
+            "description": "Code for a cryptocurrency network of a coin to get",
+            "example": "TRC20",
+            "type": "string"
+          },
+          "deposit_amount": {
+            "description": "The amount of coins to be exchanged is specified by a user",
+            "example": 0.01,
+            "type": "number"
+          },
+          "withdrawal": {
+            "description": "The destination address. LetsExchange will send the exchanged coins to this address",
+            "example": "TR7NHqjeKQxGTCi8q8ZY4txxxSzgjLj6t",
+            "type": "string"
+          },
+          "withdrawal_extra_id": {
+            "description": "Additional ID for destination wallet addresses for currencies that use extra ID for transaction processing. The field should be empty if an extra ID is not provided for a given cryptocurrency. **A request without this field is not allowed.**",
+            "example": "",
+            "type": "string"
+          },
+          "return": {
+            "description": "A user's address he sent coins from or another one that may be used as a refund address if it is necessary",
+            "example": "bc1qxygdygjrs2kzq2n0qtyrf2111pxxxxxxxwl0h",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_extra_id": {
+            "description": "An extra ID for a user's address he sent coins from or another one that may be used as a refund address if it is necessary",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "rate_id": {
+            "description": "Rate identifier for a FIXED `{float: false}` rate flow",
+            "example": "n4142vs2-5a55-11a3-344a-0b17163",
+            "type": "string"
+          },
+          "promocode": {
+            "description": "Is a transaction with a promo code",
+            "example": "promocodeExample",
+            "nullable": true,
+            "type": "string"
+          },
+          "affiliate_id": {
+            "description": "Affiliate ID",
+            "example": "q1W2e3R4tEXAMPLE",
+            "type": "string"
+          },
+          "partner_user_ip": {
+            "description": "End user IP address",
+            "example": "127.0.0.1",
+            "type": "string"
+          }
+        }
+      },
+      "CreateBridgeTransactionResponse": {
+        "type": "object",
+        "properties": {
+          "transaction_id": {
+            "description": "Unique identifier for transaction assigned by letsexchange.io",
+            "example": "5bb44a4d99cd5",
+            "type": "string"
+          },
+          "status": {
+            "description": "Transaction status is used to notify a user about the progress of the exchange process. See [transaction statuses for a detailed description](/documentation/statuses)",
+            "example": "wait",
+            "type": "string"
+          },
+          "coin_from": {
+            "description": "Coin to exchange `from`",
+            "example": "BTC",
+            "type": "string"
+          },
+          "coin_from_name": {
+            "description": "Coin to exchange `from` name",
+            "example": "Bitcoin",
+            "type": "string"
+          },
+          "coin_from_network": {
+            "description": "Coin to exchange `from` network",
+            "example": "BTC",
+            "type": "string"
+          },
+          "coin_to": {
+            "description": "Coin to exchange `to`",
+            "example": "USDT",
+            "type": "string"
+          },
+          "coin_to_name": {
+            "description": "Coin to exchange `to` name",
+            "example": "TetherUS",
+            "type": "string"
+          },
+          "coin_to_network": {
+            "description": "Coin to exchange `to` network",
+            "example": "TRC20",
+            "type": "string"
+          },
+          "deposit_amount": {
+            "description": "The amount of coins to be exchanged is specified by a user",
+            "example": "0.01",
+            "type": "string"
+          },
+          "withdrawal_amount": {
+            "description": "This is the expected amount that a user will receive when an exchange is completed",
+            "example": "595.94740104",
+            "type": "string"
+          },
+          "deposit": {
+            "description": "The deposit address to which a user must send the coins",
+            "example": "bc1efvrjjxxxx9nzzzcuzhqdxxxwe0wxx",
+            "type": "string"
+          },
+          "deposit_extra_id": {
+            "description": "Additional ID for deposit addresses for cryptocurrencies that use extra ID for transaction processing. **Important: sending coins without using extra ID (when it is provided) may result in loss of funds!**",
+            "example": null,
+            "nullable": true,
+            "type": "string"
+          },
+          "withdrawal": {
+            "description": "The destination address. LetsExchange will send the exchanged coins to this address",
+            "example": "TR7NHqjeKQxGTCi8q8ZY4txxxSzgjLj6t",
+            "type": "string"
+          },
+          "withdrawal_extra_id": {
+            "description": "Additional ID for destination wallet addresses for currencies that use extra ID for transaction processing. The field should be empty if an extra ID is not provided for a given cryptocurrency. **A request without this field is not allowed.**",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "rate": {
+            "description": "The current exchange rate offered by LetsExchange",
+            "example": "60186.054837423674181",
+            "type": "string"
+          },
+          "fee": {
+            "description": "Service fee (in destination currency) **[DEPRECATED]**",
+            "example": "0",
+            "type": "string"
+          },
+          "return": {
+            "description": "A user's address he sent coins from or another one that may be used as a refund address if it is necessary",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_hash": {
+            "description": "Hash for transaction refund",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_amount": {
+            "description": "Amount of transaction refund",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_extra_id": {
+            "description": "Additional ID for refund wallet addresses of currencies that use extra ID for transaction processing",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "is_float": {
+            "description": "Transaction FIXED or FLOAT",
+            "example": "true",
+            "type": "boolean"
+          },
+          "coin_from_explorer_url": {
+            "description": "An explorer URL for a cryptocurrency to send",
+            "example": "https://blockchair.com/bitcoin/transaction/",
+            "type": "string"
+          },
+          "coin_to_explorer_url": {
+            "description": "An explorer URL for a cryptocurrency to get",
+            "example": "https://tronscan.org/#/transaction/",
+            "type": "string"
+          },
+          "need_confirmations": {
+            "description": "Minimum number of confirmations to start the exchanging",
+            "example": 4,
+            "type": "number"
+          },
+          "aml_error_signals": {
+            "description": "List of AML signals when the status is [aml_check_failed](/documentation/statuses#aml-check-failed)",
+            "example": [{
+              "signal":"mixingService",
+              "signalId":24,
+              "signalPercent":95.6,
+              "level":4}
+            ],
+            "type": "array"
+          }
+        }
+      },
+
+      "CreateBridgeTransactionRevertRequest": {
+        "required": [
+          "coin",
+          "network_from",
+          "network_to",
+          "withdrawal_amount",
+          "withdrawal",
+          "withdrawal_extra_id",
+          "rate_id",
+          "affiliate_id"
+        ],
+        "type": "object",
+        "properties": {
+          "coin": {
+            "description": "Coin code to swap",
+            "example": "USDT",
+            "type": "string"
+          },
+          "network_from": {
+            "description": "Code for a cryptocurrency network of a coin a user will send",
+            "example": "BTC",
+            "type": "string"
+          },
+          "network_to": {
+            "description": "Code for a cryptocurrency network of a coin to get",
+            "example": "TRC20",
+            "type": "string"
+          },
+          "withdrawal_amount": {
+            "description": "Amount to be received in `coin_to` value",
+            "example": 200,
+            "type": "number"
+          },
+          "withdrawal": {
+            "description": "The destination address. LetsExchange will send the exchanged coins to this address",
+            "example": "TR7NHqjeKQxGTCi8q8ZY4txxxSzgjLj6t",
+            "type": "string"
+          },
+          "withdrawal_extra_id": {
+            "description": "Additional ID for destination wallet addresses of currencies that use extra ID for transaction processing. **Must be presented as at least an empty string**",
+            "example": "",
+            "type": "string"
+          },
+          "return": {
+            "description": "A user's address he sent coins from or another one that may be used as a refund address if it is necessary",
+            "example": "bc1qxygdygjrs2kzq2n0qtyrf2111pxxxxxxxwl0h",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_extra_id": {
+            "description": "The address user sends coins from, or another one that may be used as a refund address, if it is necessary",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "rate_id": {
+            "description": "Rate identifier for a FIXED rate flow",
+            "example": "n4142vs2-5a55-11a3-344a-0b17163",
+            "type": "string"
+          },
+          "affiliate_id": {
+            "description": "Affiliate ID",
+            "example": "q1W2e3R4tEXAMPLE",
+            "type": "string"
+          },
+          "partner_user_ip": {
+            "description": "End user IP address",
+            "example": "127.0.0.1",
+            "type": "string"
+          }
+        }
+      },
+      "CreateBridgeTransactionRevertResponse": {
         "type": "object",
         "properties": {
           "transaction_id": {
