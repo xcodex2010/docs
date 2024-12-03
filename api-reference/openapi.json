@@ -1923,6 +1923,12 @@
             "nullable": true,
             "type": "string"
           },
+          "email": {
+            "description": "User email",
+            "example": "example@gmail.com",
+            "nullable": true,
+            "type": "string"
+          },
           "affiliate_id": {
             "description": "Affiliate ID",
             "example": "q1W2e3R4tEXAMPLE",
@@ -2149,6 +2155,12 @@
             "example": "n4142vs2-5a55-11a3-344a-0b17163",
             "type": "string"
           },
+          "email": {
+            "description": "User email",
+            "example": "example@gmail.com",
+            "nullable": true,
+            "type": "string"
+          },
           "affiliate_id": {
             "description": "Affiliate ID",
             "example": "q1W2e3R4tEXAMPLE",
@@ -2368,6 +2380,12 @@
             "nullable": true,
             "type": "string"
           },
+          "email": {
+            "description": "User email",
+            "example": "example@gmail.com",
+            "nullable": true,
+            "type": "string"
+          },
           "affiliate_id": {
             "description": "Affiliate ID",
             "example": "q1W2e3R4tEXAMPLE",
@@ -2580,6 +2598,12 @@
           "rate_id": {
             "description": "Rate identifier for a FIXED rate flow",
             "example": "n4142vs2-5a55-11a3-344a-0b17163",
+            "type": "string"
+          },
+          "email": {
+            "description": "User email",
+            "example": "example@gmail.com",
+            "nullable": true,
             "type": "string"
           },
           "affiliate_id": {
