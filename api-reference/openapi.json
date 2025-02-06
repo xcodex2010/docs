@@ -1672,7 +1672,7 @@
             "example": "783211cb-60c2-4ae4-8a16-761f9fa9b2c9",
             "type": "string"
           },
-          "chainId": {
+          "chain_id": {
             "description": "EVM network Chain Id",
             "example": "1",
             "type": "string"
@@ -1687,17 +1687,17 @@
             "example": "Ethereum Network",
             "type": "string"
           },
-          "explorerUrl": {
+          "explorer_url": {
             "description": "An explorer URL for a native coin",
             "example": "https://etherscan.io/tx/",
             "type": "string"
           },
-          "smartContractExplorerUrl": {
+          "smart_contract_explorer_url": {
             "description": "An explorer URL for a token",
             "example": "https://etherscan.io/address/",
             "type": "string"
           },
-          "validationAddressRegex": {
+          "validation_address_regex": {
             "description": "Regular expression for address validation",
             "example": "^(0x)[0-9A-Fa-f]{40}$",
             "type": "string"
@@ -1712,7 +1712,7 @@
             "example": "#4d67cb",
             "type": "string"
           },
-          "backgroundColor": {
+          "background_color": {
             "description": "Background color for a network label",
             "example": "#e5ebff",
             "type": "string"
@@ -1781,13 +1781,13 @@
           "from": {
             "type": "object",
             "properties": {
-              "chainId": {
-                "description": "ChainId",
+              "chain_id": {
+                "description": "Chain ID",
                 "example": "1",
                 "type": "string"
               },
               "asset": {
-                "description": "Asset `asset_from`",
+                "description": "Asset `asset_from`. Can be contract address or constant `NATIVE` for native coin",
                 "example": "USDC",
                 "type": "string"
               },
@@ -1816,13 +1816,13 @@
           "to": {
             "type": "object",
             "properties": {
-              "chainId": {
-                "description": "ChainId",
+              "chain_id": {
+                "description": "Chain ID",
                 "example": "8453",
                 "type": "string"
               },
               "asset": {
-                "description": "Asset `asset_to`",
+                "description": "Asset `asset_to`. Can be contract address or constant `NATIVE` for native coin",
                 "example": "USDC",
                 "type": "string"
               },
@@ -1843,12 +1843,12 @@
               }
             }
           },
-          "priceImpact": {
-            "description": "Coin code from",
+          "price_impact": {
+            "description": "Price impact",
             "example": "1",
             "type": "string"
           },
-          "estimatedTimeInSeconds": {
+          "estimated_time_in_seconds": {
             "description": "Estimated time for swap in seconds",
             "example": "85",
             "type": "number"
@@ -2349,22 +2349,22 @@
             "type": "string"
           },
           "asset_from": {
-            "description": "Asset from",
+            "description": "Asset from. Can be contract address or constant `NATIVE` for native coin",
             "example": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
             "type": "string"
           },
           "asset_to": {
-            "description": "Asset to",
+            "description": "Asset to. Can be contract address or constant `NATIVE` for native coin",
             "example": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
             "type": "string"
           },
           "network_from": {
-            "description": "EVM chain ID or our network UUID",
+            "description": "EVM chain ID or network UUID",
             "example": "1",
             "type": "string"
           },
           "network_to": {
-            "description": "EVM chain ID or our network UUID",
+            "description": "EVM chain ID or network UUID",
             "example": "8453",
             "type": "string"
           },
