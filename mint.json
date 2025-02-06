@@ -78,6 +78,15 @@
           ]
         },
         {
+          "group": "Create DEX",
+          "pages": [
+            "api-reference/endpoint/v1/transaction/dex/networks",
+            "api-reference/endpoint/v1/transaction/dex/quote",
+            "api-reference/endpoint/v1/transaction/dex/swap",
+            "api-reference/endpoint/v1/transaction/dex/get-swap-info"
+          ]
+        },
+        {
           "group": "Get Transaction Info",
           "pages": [
             "api-reference/endpoint/v1/transaction/get-transaction",

@@ -114,6 +114,54 @@
       }
     },
 
+    "/v1/dex/networks": {
+      "get": {
+        "description": "This returns the list of networks available for DEX exchange",
+        "responses": {
+          "200": {
+            "description": "DEX networks response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DexNetworksResponse"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Wrong API key in Bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WrongAPITokenError"
+                },
+                "example": {
+                  "error": "Wrong number of segments"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Internal error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
     "/v1/info": {
       "post": {
         "description": "It returns the current rate, calculates the final amount that the user will receive, and sets the minimum and maximum amounts for deposits.",
@@ -543,6 +591,94 @@
       }
     },
 
+    "/v1/dex/quote": {
+      "post": {
+        "description": "It returns the current rate, calculates the final amount that the user will receive.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DEXCoinQuoteRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "DEX Quote Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DEXCoinQuoteResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Wrong API key in Bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WrongAPITokenError"
+                },
+                "example": {
+                  "error": "Wrong number of segments"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Rate is not available for this pair."
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": {
+                    "validation": {
+                      "withdrawal_amount": "Min amoun: 0.002"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Internal error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
     "/v1/transaction": {
       "post": {
         "description": "This call allows you to request creation of an exchange. You choose the coin pair you’d like to exchange, provide the sender’s withdrawal address, and specify the amount of coins you want to swap. Letsexchange.io returns the address and extra ID (if needed) for a deposit, final amount, fee, and other parameters.\n\n**To receive an affiliate fee from a transaction, the API query must include the following parameter: `affiliate_id`.**",
@@ -879,6 +1015,163 @@
           },
           "500": {
             "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Internal error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/v1/dex/transaction": {
+      "post": {
+        "description": "This call allows you to request creation of an DEX swap. \n\n**To receive an affiliate fee from a transaction, the API query must include the following parameter: `affiliate_id`.**",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDEXTransactionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Create DEX Transaction response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateDEXTransactionResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Wrong API key in Bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WrongAPITokenError"
+                },
+                "example": {
+                  "error": "Wrong number of segments"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Rate is not available for this pair."
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": {
+                    "validation": {
+                      "withdrawal_extra_id": "The withdrawal extra id field must be present."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Internal error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/v1/dex/transaction/{id}": {
+      "get": {
+        "description": "It gives detailed information about a single DEX swap.",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "string",
+            "description": "Unique identifier for transaction assigned by letsexchange.io",
+            "example": "d599cd4bb4d4a5"
+          },
+          "required": true
+        }],
+        "responses": {
+          "200": {
+            "description": "Get DEX Transaction Info response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDEXTransactionResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Wrong API key in Bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WrongAPITokenError"
+                },
+                "example": {
+                  "error": "Wrong number of segments"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Transaction not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
             "content": {
               "application/json": {
                 "schema": {
@@ -1371,6 +1664,198 @@
         }
       },
 
+      "DexNetworksResponse": {
+        "type": "object",
+        "properties": {
+          "uuid": {
+            "description": "Unique identifier",
+            "example": "783211cb-60c2-4ae4-8a16-761f9fa9b2c9",
+            "type": "string"
+          },
+          "chainId": {
+            "description": "EVM network Chain Id",
+            "example": "1",
+            "type": "string"
+          },
+          "code": {
+            "description": "Network code",
+            "example": "ERC20",
+            "type": "string"
+          },
+          "name": {
+            "description": "Network name",
+            "example": "Ethereum Network",
+            "type": "string"
+          },
+          "explorerUrl": {
+            "description": "An explorer URL for a native coin",
+            "example": "https://etherscan.io/tx/",
+            "type": "string"
+          },
+          "smartContractExplorerUrl": {
+            "description": "An explorer URL for a token",
+            "example": "https://etherscan.io/address/",
+            "type": "string"
+          },
+          "validationAddressRegex": {
+            "description": "Regular expression for address validation",
+            "example": "^(0x)[0-9A-Fa-f]{40}$",
+            "type": "string"
+          },
+          "icon": {
+            "description": "Network icon URL",
+            "example": "https://images.letsexchange.io/coins/cce0373d3721efb48fb7ced57e26f6d6.svg",
+            "type": "string"
+          },
+          "color": {
+            "description": "Text color for a network label",
+            "example": "#4d67cb",
+            "type": "string"
+          },
+          "backgroundColor": {
+            "description": "Background color for a network label",
+            "example": "#e5ebff",
+            "type": "string"
+          }
+        }
+      },
+
+      "DEXCoinQuoteRequest": {
+        "required": [
+          "asset_from",
+          "asset_to",
+          "network_from",
+          "network_to",
+          "amount",
+          "affiliate_id"
+        ],
+        "type": "object",
+        "properties": {
+          "asset_from": {
+            "description": "Asset from",
+            "example": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "type": "string"
+          },
+          "asset_to": {
+            "description": "Asset to",
+            "example": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+            "type": "string"
+          },
+          "network_from": {
+            "description": "EVM chain ID or our network UUID",
+            "example": "1",
+            "type": "string"
+          },
+          "network_to": {
+            "description": "EVM chain ID or our network UUID",
+            "example": "8453",
+            "type": "string"
+          },
+          "amount": {
+            "description": "Amount of asset `from`",
+            "example": 2000,
+            "type": "number"
+          },
+          "address_from": {
+            "description": "The deposit address to which a user must send the coins",
+            "example": "0xa2e9Eb0cE3606....",
+            "nullable": true,
+            "type": "string"
+          },
+          "address_to": {
+            "description": "The destination address. LetsExchange will send the exchanged coins to this address",
+            "example": "0x5cE3606a2e9Eb....",
+            "nullable": true,
+            "type": "string"
+          },
+          "affiliate_id": {
+            "description": "Affiliate ID",
+            "example": "q1W2e3R4tEXAMPLE",
+            "type": "string"
+          }
+        }
+      },
+      "DEXCoinQuoteResponse": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "object",
+            "properties": {
+              "chainId": {
+                "description": "ChainId",
+                "example": "1",
+                "type": "string"
+              },
+              "asset": {
+                "description": "Asset `asset_from`",
+                "example": "USDC",
+                "type": "string"
+              },
+              "contract": {
+                "description": "Contract address asset from",
+                "example": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+                "type": "string"
+              },
+              "amount": {
+                "description": "Amount of asset `asset_from`",
+                "example": "2000.000000",
+                "type": "string"
+              },
+              "usd": {
+                "description": "Amount in USD value",
+                "example": "2000",
+                "type": "string"
+              },
+              "balance": {
+                "description": "Your wallet address balance",
+                "example": "0",
+                "type": "string"
+              }
+            }
+          },
+          "to": {
+            "type": "object",
+            "properties": {
+              "chainId": {
+                "description": "ChainId",
+                "example": "8453",
+                "type": "string"
+              },
+              "asset": {
+                "description": "Asset `asset_to`",
+                "example": "USDC",
+                "type": "string"
+              },
+              "contract": {
+                "description": "Contract address asset to",
+                "example": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+                "type": "string"
+              },
+              "amount": {
+                "description": "Amount user will get",
+                "example": "1800.227635",
+                "type": "string"
+              },
+              "min": {
+                "description": "Minimum guaranteed amount",
+                "example": "1700.316253",
+                "type": "string"
+              }
+            }
+          },
+          "priceImpact": {
+            "description": "Coin code from",
+            "example": "1",
+            "type": "string"
+          },
+          "estimatedTimeInSeconds": {
+            "description": "Estimated time for swap in seconds",
+            "example": "85",
+            "type": "number"
+          }
+        }
+      },
+
       "CoinInfoRequest": {
         "required": [
           "from",
@@ -1841,6 +2326,217 @@
           "rate_id_expired_at": {
             "description": "The timestamp (in milliseconds) when the received rate will expire",
             "example": "1719396641906",
+            "type": "string"
+          }
+        }
+      },
+
+      "CreateDEXTransactionRequest": {
+        "required": [
+          "affiliate_id",
+          "asset_from",
+          "asset_to",
+          "network_from",
+          "network_to",
+          "deposit_amount",
+          "sender_address"
+        ],
+        "type": "object",
+        "properties": {
+          "affiliate_id": {
+            "description": "Affiliate ID",
+            "example": "q1W2e3R4tEXAMPLE",
+            "type": "string"
+          },
+          "asset_from": {
+            "description": "Asset from",
+            "example": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "type": "string"
+          },
+          "asset_to": {
+            "description": "Asset to",
+            "example": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+            "type": "string"
+          },
+          "network_from": {
+            "description": "EVM chain ID or our network UUID",
+            "example": "1",
+            "type": "string"
+          },
+          "network_to": {
+            "description": "EVM chain ID or our network UUID",
+            "example": "8453",
+            "type": "string"
+          },
+          "deposit_amount": {
+            "description": "Amount of asset `from`",
+            "example": "2000",
+            "type": "string"
+          },
+          "sender_address": {
+            "description": "The sender address",
+            "example": "0x1641069599e5a273C8c0607B....",
+            "type": "string"
+          },
+          "withdrawal_address": {
+            "description": "The destination address. LetsExchange will send the exchanged coins to this address. If you send NULL, you will get funds on `deposit_address`",
+            "example": "0x7f20e5e4c7105acdfa3ef34bf56743....",
+            "nullable": true,
+            "type": "string"
+          },
+          "partner_user_ip": {
+            "description": "End user IP address",
+            "example": "127.0.0.1",
+            "nullable": true,
+            "type": "string"
+          },
+          "client_source_url": {
+            "description": "Client source URL",
+            "example": "https://www.google.com/",
+            "nullable": true,
+            "type": "string"
+          }
+        }
+      },
+      "CreateDEXTransactionResponse": {
+        "type": "object",
+        "properties": {
+          "deposit": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "description": "Transaction hex raw data",
+                "example": "0xa11b11980000000000000000000000...0000000000000000000000",
+                "type": "string"
+              },
+              "value": {
+                "description": "????",
+                "example": "0",
+                "type": "string"
+              },
+              "send_address": {
+                "description": "The address to which `dexData.data` should be sent",
+                "example": "0xf621Fb08BBE...349689416f7F6F",
+                "type": "string"
+              },
+              "approve_address": {
+                "description": "The contract address to which user should approve ERC20 tokens",
+                "example": "0xfCEF2Fe7241...14caD8bcd7512",
+                "type": "string"
+              }
+            }
+          },
+          "status": {
+            "description": "Transaction status is used to notify a user about the progress of the exchange process. See [transaction statuses for a detailed description](/documentation/statuses)",
+            "example": "wait",
+            "type": "string"
+          },
+          "type": {
+            "description": "Transaction type",
+            "example": "dex",
+            "type": "string"
+          },
+          "transaction_id": {
+            "description": "Unique identifier for transaction assigned by letsexchange.io",
+            "example": "d5bb44a4d99cd5",
+            "type": "string"
+          },
+          "coin_from": {
+            "description": "Coin to exchange `from`",
+            "example": "USDC",
+            "type": "string"
+          },
+          "coin_to": {
+            "description": "Coin to exchange `to`",
+            "example": "USDT",
+            "type": "string"
+          },
+          "deposit_amount": {
+            "description": "The amount of coins to be exchanged is specified by a user",
+            "example": "2000.000000",
+            "type": "string"
+          },
+          "withdrawal_amount": {
+            "description": "This is the expected amount that a user will receive when an exchange is completed",
+            "example": "1800.496713",
+            "type": "string"
+          },
+          "withdrawal": {
+            "description": "The destination address. LetsExchange will send the exchanged assets to this address",
+            "example": "0x7f20e5e4c7105acdfa3ef34bf56743....",
+            "type": "string"
+          },
+          "withdrawal_extra_id": {
+            "description": "Additional ID for destination wallet addresses for currencies that use extra ID for transaction processing. The field should be empty if an extra ID is not provided for a given cryptocurrency. **A request without this field is not allowed.**",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "return": {
+            "description": "A user's address he sent coins from or another one that may be used as a refund address if it is necessary",
+            "example": "0x1641069599e5a273C8c0607B....",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_extra_id": {
+            "description": "Additional ID for refund wallet addresses of currencies that use extra ID for transaction processing",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "coin_from_network": {
+            "description": "Asset to exchange `from` network",
+            "example": "ERC20",
+            "type": "string"
+          },
+          "coin_to_network": {
+            "description": "Asset to exchange `to` network",
+            "example": "BASE",
+            "type": "string"
+          },
+          "coin_from_contract_address": {
+            "description": "Asset `from` contract address",
+            "example": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "type": "string"
+          },
+          "coin_to_contract_address": {
+            "description": "Asset `to` contract address",
+            "example": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+            "type": "string"
+          },
+          "created_at": {
+            "description": "Transaction creation date",
+            "example": "2025-02-05 18:52:46",
+            "type": "string"
+          },
+          "coin_from_explorer_url": {
+            "description": "An explorer URL for a asset to send",
+            "example": "https://etherscan.io/tx/",
+            "type": "string"
+          },
+          "coin_to_explorer_url": {
+            "description": "An explorer URL for a asset to get",
+            "example": "https://basescan.org/tx/",
+            "type": "string"
+          },
+          "coin_from_icon": {
+            "description": "Asset to exchange `from` icon",
+            "example": "https://images.letsexchange.io/coins/6dfa9838b46e464c1c27446f6e7b4b64.svg",
+            "type": "string"
+          },
+          "coin_to_icon": {
+            "description": "Asset to exchange `from` icon",
+            "example": "https://images.letsexchange.io/coins/6dfa9838b46e464c1c27446f6e7b4b64.svg",
+            "type": "string"
+          },
+          "coin_to_name": {
+            "description": "Asset to exchange `to` name",
+            "example": "USD Coin",
+            "type": "string"
+          },
+          "coin_from_name": {
+            "description": "Asset to exchange `from` name",
+            "example": "USD Coin",
             "type": "string"
           }
         }
@@ -2958,6 +3654,150 @@
               "level":4}
             ],
             "type": "array"
+          }
+        }
+      },
+
+      "GetDEXTransactionResponse": {
+        "type": "object",
+        "properties": {
+          "deposit": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "description": "Transaction hex raw data",
+                "example": "0xa11b11980000000000000000000000...0000000000000000000000",
+                "type": "string"
+              },
+              "value": {
+                "description": "????",
+                "example": "0",
+                "type": "string"
+              },
+              "send_address": {
+                "description": "The address to which `dexData.data` should be sent",
+                "example": "0xf621Fb08BBE...349689416f7F6F",
+                "type": "string"
+              },
+              "approve_address": {
+                "description": "The contract address to which user should approve ERC20 tokens",
+                "example": "0xfCEF2Fe7241...14caD8bcd7512",
+                "type": "string"
+              }
+            }
+          },
+          "status": {
+            "description": "Transaction status is used to notify a user about the progress of the exchange process. See [transaction statuses for a detailed description](/documentation/statuses)",
+            "example": "wait",
+            "type": "string"
+          },
+          "type": {
+            "description": "Transaction type",
+            "example": "dex",
+            "type": "string"
+          },
+          "transaction_id": {
+            "description": "Unique identifier for transaction assigned by letsexchange.io",
+            "example": "d5bb44a4d99cd5",
+            "type": "string"
+          },
+          "coin_from": {
+            "description": "Coin to exchange `from`",
+            "example": "USDC",
+            "type": "string"
+          },
+          "coin_to": {
+            "description": "Coin to exchange `to`",
+            "example": "USDT",
+            "type": "string"
+          },
+          "deposit_amount": {
+            "description": "The amount of coins to be exchanged is specified by a user",
+            "example": "2000.000000",
+            "type": "string"
+          },
+          "withdrawal_amount": {
+            "description": "This is the expected amount that a user will receive when an exchange is completed",
+            "example": "1800.496713",
+            "type": "string"
+          },
+          "withdrawal": {
+            "description": "The destination address. LetsExchange will send the exchanged assets to this address",
+            "example": "0x7f20e5e4c7105acdfa3ef34bf56743....",
+            "type": "string"
+          },
+          "withdrawal_extra_id": {
+            "description": "Additional ID for destination wallet addresses for currencies that use extra ID for transaction processing. The field should be empty if an extra ID is not provided for a given cryptocurrency. **A request without this field is not allowed.**",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "return": {
+            "description": "A user's address he sent coins from or another one that may be used as a refund address if it is necessary",
+            "example": "0x1641069599e5a273C8c0607B....",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_extra_id": {
+            "description": "Additional ID for refund wallet addresses of currencies that use extra ID for transaction processing",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "coin_from_network": {
+            "description": "Asset to exchange `from` network",
+            "example": "ERC20",
+            "type": "string"
+          },
+          "coin_to_network": {
+            "description": "Asset to exchange `to` network",
+            "example": "BASE",
+            "type": "string"
+          },
+          "coin_from_contract_address": {
+            "description": "Asset `from` contract address",
+            "example": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "type": "string"
+          },
+          "coin_to_contract_address": {
+            "description": "Asset `to` contract address",
+            "example": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+            "type": "string"
+          },
+          "created_at": {
+            "description": "Transaction creation date",
+            "example": "2025-02-05 18:52:46",
+            "type": "string"
+          },
+          "coin_from_explorer_url": {
+            "description": "An explorer URL for a asset to send",
+            "example": "https://etherscan.io/tx/",
+            "type": "string"
+          },
+          "coin_to_explorer_url": {
+            "description": "An explorer URL for a asset to get",
+            "example": "https://basescan.org/tx/",
+            "type": "string"
+          },
+          "coin_from_icon": {
+            "description": "Asset to exchange `from` icon",
+            "example": "https://images.letsexchange.io/coins/6dfa9838b46e464c1c27446f6e7b4b64.svg",
+            "type": "string"
+          },
+          "coin_to_icon": {
+            "description": "Asset to exchange `from` icon",
+            "example": "https://images.letsexchange.io/coins/6dfa9838b46e464c1c27446f6e7b4b64.svg",
+            "type": "string"
+          },
+          "coin_to_name": {
+            "description": "Asset to exchange `to` name",
+            "example": "USD Coin",
+            "type": "string"
+          },
+          "coin_from_name": {
+            "description": "Asset to exchange `from` name",
+            "example": "USD Coin",
+            "type": "string"
           }
         }
       },
