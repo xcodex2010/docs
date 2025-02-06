@@ -1732,12 +1732,12 @@
         "type": "object",
         "properties": {
           "asset_from": {
-            "description": "Asset from",
+            "description": "Asset from. EVM contract address or constant `NATIVE` for native coin",
             "example": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
             "type": "string"
           },
           "asset_to": {
-            "description": "Asset to",
+            "description": "Asset to. EVM contract address or constant `NATIVE` for native coin",
             "example": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
             "type": "string"
           },
@@ -1787,7 +1787,7 @@
                 "type": "string"
               },
               "asset": {
-                "description": "Asset `asset_from`. Can be contract address or constant `NATIVE` for native coin",
+                "description": "Asset `asset_from`. EVM contract address or constant `NATIVE` for native coin",
                 "example": "USDC",
                 "type": "string"
               },
@@ -1822,7 +1822,7 @@
                 "type": "string"
               },
               "asset": {
-                "description": "Asset `asset_to`. Can be contract address or constant `NATIVE` for native coin",
+                "description": "Asset `asset_to`. EVM contract address or constant `NATIVE` for native coin",
                 "example": "USDC",
                 "type": "string"
               },
@@ -2349,12 +2349,12 @@
             "type": "string"
           },
           "asset_from": {
-            "description": "Asset from. Can be contract address or constant `NATIVE` for native coin",
+            "description": "Asset from. EVM contract address or constant `NATIVE` for native coin",
             "example": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
             "type": "string"
           },
           "asset_to": {
-            "description": "Asset to. Can be contract address or constant `NATIVE` for native coin",
+            "description": "Asset to. EVM contract address or constant `NATIVE` for native coin",
             "example": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
             "type": "string"
           },
