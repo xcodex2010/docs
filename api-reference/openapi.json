@@ -114,6 +114,53 @@
       }
     },
 
+    "/v1/dex/coins": {
+      "get": {
+        "description": "This returns the list of coins available for DEX swap. \nThe response also contains parameters such as the “extra ID”, if applicable for a specific cryptocurrency, for example, the Destination Tag for XRP (XRP). \n\nIn addition, the response provides icon links.\n",
+        "responses": {
+          "200": {
+            "description": "DEX Coins response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DEXCoinResponse"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Wrong API key in Bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WrongAPITokenError"
+                },
+                "example": {
+                  "error": "Wrong number of segments"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Internal error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/dex/networks": {
       "get": {
         "description": "This returns the list of networks available for DEX exchange",
@@ -1664,6 +1711,85 @@
         }
       },
 
+      "DEXCoinResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Coin short name (code)",
+            "example": "USDC",
+            "type": "string"
+          },
+          "name": {
+            "description": "Currency full name",
+            "example": "USDC",
+            "type": "string"
+          },
+          "icon": {
+            "description": "The link to the coin logo",
+            "example": "https://images.letsexchange.io/coins/cce0373d3721efb48fb7ced57e26f6d6.svg",
+            "type": "string"
+          },
+          "networks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "uuid": {
+                  "description": "Unique network ID",
+                  "example": "783211cb-60c2-4ae4-8a16-761f9fa9b2c9",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Network name",
+                  "example": "Ethereum Network",
+                  "type": "string"
+                },
+                "code": {
+                  "description": "Network code",
+                  "example": "ERC20",
+                  "type": "string"
+                },
+                "icon": {
+                  "description": "The link to the network logo",
+                  "example": "https://images.letsexchange.io/coins/cce0373d3721efb48fb7ced57e26f6d6.svg",
+                  "nullable": true,
+                  "type": "string"
+                },
+                "background_color": {
+                  "description": "Network background color",
+                  "example": "#e5ebff",
+                  "type": "string"
+                },
+                "color": {
+                  "description": "Network text color",
+                  "example": "#4d67cb",
+                  "type": "string"
+                },
+                "chain_id": {
+                  "description": "Network chain id",
+                  "example": "1",
+                  "type": "string"
+                },
+                "contract_address": {
+                  "description": "Contract address",
+                  "example": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                  "type": "string"
+                },
+                "smart_contract_explorer_url": {
+                  "description": "Blockchain explorer URL is used to check transaction status in a block explorer",
+                  "example": "https://etherscan.io/address/",
+                  "type": "string"
+                },
+                "validation_address_regex": {
+                  "description": "Validation address regex",
+                  "example": "^(0x)[0-9A-Fa-f]{40}$",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "DexNetworksResponse": {
         "type": "object",
         "properties": {

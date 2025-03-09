@@ -80,6 +80,7 @@
         {
           "group": "Create DEX",
           "pages": [
+            "api-reference/endpoint/v1/transaction/dex/coins",
             "api-reference/endpoint/v1/transaction/dex/networks",
             "api-reference/endpoint/v1/transaction/dex/quote",
             "api-reference/endpoint/v1/transaction/dex/swap",
