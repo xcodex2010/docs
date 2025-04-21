@@ -34,7 +34,9 @@
       "group": "Get Started",
       "pages": [
         "documentation/introduction",
-        "documentation/swap",
+        "documentation/swap-flow",
+        "documentation/defi",
+        "documentation/defi-swap-flow",
         "documentation/statuses",
         "documentation/transaction-errors",
         "documentation/affiliate-link",
@@ -78,7 +80,7 @@
           ]
         },
         {
-          "group": "Create DEX",
+          "group": "Create DEX ❗[BETA]❗",
           "pages": [
             "api-reference/endpoint/v1/transaction/dex/coins",
             "api-reference/endpoint/v1/transaction/dex/networks",

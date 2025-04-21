@@ -1,0 +1,43 @@
+---
+title: 'Swap flow (DeFi mode)'
+description: ''
+---
+With the LetsExchange DeFi API, you can easily add decentralized cross-chain swaps to your app.
+The API works with multiple blockchain networks. All swaps happen directly in the user's wallet.
+
+Using this mode, you’ll receive the same partner commission (in BTC) as you do for centralized
+exchanges. If you need a custom fee for DeFi swaps, please contact your B2B manager.
+
+Below is the exchange flow when using the LetsExchange DeFi API.
+
+To perform a DeFi exchange, you need to follow these steps:
+
+<Steps>
+    <Step>
+        Call **[GET /api/v1/dex/networks](/api-reference/endpoint/v1/transaction/dex/networks)** to get a list of available blockchain networks.
+    </Step>
+    <Step>
+        Call **[GET /api/v1/dex/coins](/api-reference/endpoint/v1/transaction/dex/coins)** to get a recommended list
+        of coins or use your own list. You can exchange any token by its contract address, even if it is not in our coin list.
+    </Step>
+    <Step>
+         Call **[POST /api/v1/dex/quote](/api-reference/endpoint/v1/transaction/dex/quote)** to get a quote rate.
+    </Step>
+    <Step>
+         Call **[POST /api/v1/dex/transaction](/api-reference/endpoint/v1/transaction/dex/swap)** to create an
+         exchange for receiving swap/approve payload data and an exchange identifier.
+    </Step>
+    <Step>
+         If the source token isn't the native one used to pay network fees (like ETH on Ethereum),
+         a user must permit its spending. To do that, he must sign the **approve** transaction from the previous
+         step and send it to the approval address provided. This lets the system know it can use tokens for the swap.
+    </Step>
+    <Step>
+         Sign the swap payload data obtained in step 4 using a wallet private key and send it
+         to the swap address in the source blockchain network.
+    </Step>
+    <Step>
+         Call **[GET /api/v1/dex/transaction/{id}](/api-reference/endpoint/v1/transaction/dex/get-swap-info)** to get
+         information about the progress of the exchange.
+    </Step>
+</Steps>
