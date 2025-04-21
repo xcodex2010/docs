@@ -35,7 +35,6 @@
       "pages": [
         "documentation/introduction",
         "documentation/swap-flow",
-        "documentation/defi",
         "documentation/defi-swap-flow",
         "documentation/statuses",
         "documentation/transaction-errors",

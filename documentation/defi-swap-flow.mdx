@@ -41,3 +41,176 @@ To perform a DeFi exchange, you need to follow these steps:
          information about the progress of the exchange.
     </Step>
 </Steps>
+
+
+# Example
+
+```js
+const { ethers } = require('ethers');
+const axios = require('axios').default;
+
+const letsexchangeApiKey = '...';
+
+const myAddress = '...';
+const myPrivKey = '...';
+
+const rpcUrl = '...';
+
+const http = axios.create({
+    baseURL: 'https://api.letsexchange.io',
+    headers: { Authorization: 'Bearer ' + letsexchangeApiKey },
+});
+
+(async () => {
+    const networks = await http.get('/api/v1/dex/networks');
+
+    const networkFrom = networks.data.find((network) => network.code === 'BASE');
+    const networkTo = networks.data.find((network) => network.code === 'BEP20');
+
+    console.log(networkFrom);
+    console.log(networkTo);
+
+    const coins = await http.get('/api/v2/coins');
+
+    const coinFrom = coins.data.find((coin) => coin.code === 'USDC');
+    const coinFromNetwork = coinFrom.networks.find((network) => network.code === networkFrom.code);
+
+    const coinTo = coins.data.find((coin) => coin.code === 'BNB');
+    const coinToNetwork = coinTo.networks.find((network) => network.code === 'BNB');
+
+    console.log(coinFromNetwork);
+    console.log(coinToNetwork);
+
+    const quoteRequest = {
+        affiliate_id: null,
+        asset_from: coinFromNetwork.contract_address,
+        asset_to: coinToNetwork.contract_address ?? 'NATIVE',
+        network_from: coinFromNetwork.chain_id, // or networkFrom.uuid
+        network_to: coinToNetwork.chain_id,
+        amount: '100',
+        address_from: myAddress,
+        address_to: myAddress,
+    };
+
+    console.log('quoteRequest:', quoteRequest);
+
+    const quote = await http.post('api/v1/dex/quote', quoteRequest);
+
+    console.log('quoteRequest:', quote.data);
+
+    const swapRequest = {
+        affiliate_id: 'G0wqz01k3kZdHsdu', // your affiliate id or null
+        asset_from: coinFromNetwork.contract_address,
+        asset_to: coinToNetwork.contract_address ?? 'NATIVE',
+        network_from: coinFromNetwork.chain_id, // or networkFrom.uuid
+        network_to: coinToNetwork.chain_id,
+        amount: '100',
+        address_from: myAddress,
+        address_to: myAddress,
+    };
+
+    console.log('swapRequest:', swapRequest);
+
+    const swap = await http.post('api/v1/dex/transaction', swapRequest);
+
+    console.log('swapResponse:', swap.data);
+
+    const provider = new ethers.providers.StaticJsonRpcProvider({
+        url: rpcUrl,
+    });
+
+    const wallet = new ethers.Wallet(myPrivKey, provider);
+
+    const gasPrice = await provider.getGasPrice();
+    console.log('gasPrice:', gasPrice.toString());
+
+    const ERC20_ABI = [
+        'function balanceOf(address owner) view returns (uint256)',
+        'function decimals() view returns (uint8)',
+        'function transfer(address to, uint256 amount) returns (bool)',
+        'function symbol() view returns (string)',
+        'function approve(address spender, uint256 amount) returns (bool)',
+        'function allowance(address owner, address spender) view returns (uint256)',
+    ];
+
+    // approve
+
+    const tokenContract = new ethers.Contract(swap.data.coin_from_contract_address, ERC20_ABI, provider);
+
+    const tokenDecimals = Number(await tokenContract.decimals());
+    console.log('tokenDecimals:', tokenDecimals);
+    const approveAmount = ethers.utils.parseUnits(swap.data.deposit_amount, tokenDecimals);
+    console.log('approveAmount:', approveAmount);
+
+    const approveData = await tokenContract.populateTransaction.approve(
+        swap.data.deposit.approve_address,
+        approveAmount,
+    );
+    console.log('approveData:', approveData);
+
+    const gasLimitApprove = (await provider.estimateGas({ from: myAddress, ...approveData })).mul('120').div('100'); //add 20% to gasLimit for guaranteed execution
+    console.log('approve gasLimit:', gasLimitApprove.toString());
+
+    const approveTx = {
+        from: myAddress,
+        to: approveData.to,
+        data: approveData.data,
+        gasPrice,
+        gasLimit: gasLimitApprove,
+        chainId: (await provider.getNetwork()).chainId,
+        nonce: await provider.getTransactionCount(myAddress),
+    };
+    console.log('approveTx:', approveTx);
+
+    const signedApproveTx = await wallet.signTransaction(approveTx);
+
+    console.log('approveTxSigned:', signedApproveTx);
+
+    const approve = await provider.sendTransaction(signedApproveTx);
+
+    console.log('approveHash:', approve.hash);
+
+    await approve.wait(1);
+
+    console.log('approve success');
+
+    // approve end
+
+    //swap
+
+    const swapTxData = {
+        chainId: (await provider.getNetwork()).chainId,
+        nonce: await provider.getTransactionCount(myAddress),
+        gasLimit: null,
+        gasPrice: gasPrice,
+        from: myAddress,
+        to: swap.data.deposit.send_address,
+        value: ethers.utils.hexlify(Number(swap.data.deposit.value)),
+        data: swap.data.deposit.data,
+    };
+    console.log('swapTxData', swapTxData);
+
+    const gasLimitSwap = await provider.estimateGas(swapTxData);
+    swapTxData.gasLimit = gasLimitSwap.mul(120).div(100);
+    console.log('gasLimitSwap', swapTxData.gasLimit.toString());
+
+    const signedSwapTx = await wallet.signTransaction(swapTxData);
+
+    console.log('signedSwapTx:', signedSwapTx);
+
+    const swapTx = await provider.sendTransaction(signedSwapTx);
+
+    console.log('swapTxHash:', swapTx.hash);
+
+    await swapTx.wait(1);
+
+    console.log('swap success');
+
+    //swap end
+
+    const result = await http.get(`api/v1/dex/transaction/${swap.data.transaction_id}`);
+
+    console.log(result.data);
+})();
+
+```
