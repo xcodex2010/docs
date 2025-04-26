@@ -640,7 +640,7 @@
 
     "/v1/dex/quote": {
       "post": {
-        "description": "It returns the current rate, calculates the final amount that the user will receive.",
+        "description": "It returns the current rate, calculates the final amount that the user will receive. <Warning>UNDER MAINTENANCE</Warning>",
         "requestBody": {
           "description": "",
           "content": {
