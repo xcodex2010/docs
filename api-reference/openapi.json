@@ -1080,7 +1080,7 @@
 
     "/v1/dex/transaction": {
       "post": {
-        "description": "This call allows you to request creation of an DEX swap. \n\n**To receive an affiliate fee from a transaction, the API query must include the following parameter: `affiliate_id`.**",
+        "description": "This call allows you to request creation of an DEX swap. \n\n<Warning>UNDER MAINTENANCE</Warning> **To receive an affiliate fee from a transaction, the API query must include the following parameter: `affiliate_id`.**",
         "requestBody": {
           "description": "",
           "content": {
