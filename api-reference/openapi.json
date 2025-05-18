@@ -2536,7 +2536,7 @@
                 "type": "string"
               },
               "value": {
-                "description": "Approval amount",
+                "description": "Deposit data value",
                 "example": "0",
                 "type": "string"
               },
