@@ -1125,7 +1125,7 @@
                 },
                 "example": {
                   "success": false,
-                  "error": "Rate is not available for this pair."
+                  "error": "Dex rate is not available for this pair."
                 }
               }
             }
