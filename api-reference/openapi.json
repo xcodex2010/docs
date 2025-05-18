@@ -2536,7 +2536,7 @@
                 "type": "string"
               },
               "value": {
-                "description": "????",
+                "description": "Approval amount",
                 "example": "0",
                 "type": "string"
               },
@@ -2546,8 +2546,9 @@
                 "type": "string"
               },
               "approve_address": {
-                "description": "The contract address to which user should approve ERC20 tokens",
+                "description": "The contract address to which user should approve ERC20 tokens. \n`Skip approval tx if NULL`",
                 "example": "0xfCEF2Fe7241...14caD8bcd7512",
+                "nullable": true,
                 "type": "string"
               }
             }

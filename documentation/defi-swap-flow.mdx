@@ -75,15 +75,15 @@ const http = axios.create({
     const coinFrom = coins.data.find((coin) => coin.code === 'USDC');
     const coinFromNetwork = coinFrom.networks.find((network) => network.code === networkFrom.code);
 
-    const coinTo = coins.data.find((coin) => coin.code === 'BNB');
-    const coinToNetwork = coinTo.networks.find((network) => network.code === 'BNB');
+    const coinTo = coins.data.find((coin) => coin.code === 'USDC');
+    const coinToNetwork = coinTo.networks.find((network) => network.code === networkTo.code);
 
     console.log(coinFromNetwork);
     console.log(coinToNetwork);
 
     const quoteRequest = {
         affiliate_id: null,
-        asset_from: coinFromNetwork.contract_address,
+        asset_from: coinFromNetwork.contract_address ?? 'NATIVE',
         asset_to: coinToNetwork.contract_address ?? 'NATIVE',
         network_from: coinFromNetwork.chain_id, // or networkFrom.uuid
         network_to: coinToNetwork.chain_id,
@@ -98,17 +98,16 @@ const http = axios.create({
 
     console.log('quoteRequest:', quote.data);
 
-    const swapRequest = {
-        affiliate_id: 'G0wqz01k3kZdHsdu', // your affiliate id or null
-        asset_from: coinFromNetwork.contract_address,
+   const swapRequest = {
+        affiliate_id: 'G0wqz01k3kZdHsdu', //null
+        asset_from: coinFromNetwork.contract_address ?? 'NATIVE',
         asset_to: coinToNetwork.contract_address ?? 'NATIVE',
-        network_from: coinFromNetwork.chain_id, // or networkFrom.uuid
+        network_from: coinFromNetwork.chain_id, //or networkFrom.uuid
         network_to: coinToNetwork.chain_id,
-        amount: '100',
-        address_from: myAddress,
-        address_to: myAddress,
+        deposit_amount: '100',
+        sender_address: myAddress,
+        withdrawal_address: myAddress,
     };
-
     console.log('swapRequest:', swapRequest);
 
     const swap = await http.post('api/v1/dex/transaction', swapRequest);
@@ -134,46 +133,46 @@ const http = axios.create({
     ];
 
     // approve
+    if (swap && swap.data.deposit.approve_address) {
+        const tokenContract = new ethers.Contract(swap.data.coin_from_contract_address, ERC20_ABI, provider);
 
-    const tokenContract = new ethers.Contract(swap.data.coin_from_contract_address, ERC20_ABI, provider);
+        const tokenDecimals = Number(await tokenContract.decimals());
+        console.log('tokenDecimals:', tokenDecimals);
+        const approveAmount = ethers.utils.parseUnits(swap.data.deposit_amount, tokenDecimals);
+        console.log('approveAmount:', approveAmount);
 
-    const tokenDecimals = Number(await tokenContract.decimals());
-    console.log('tokenDecimals:', tokenDecimals);
-    const approveAmount = ethers.utils.parseUnits(swap.data.deposit_amount, tokenDecimals);
-    console.log('approveAmount:', approveAmount);
+        const approveData = await tokenContract.populateTransaction.approve(
+            swap.data.deposit.approve_address,
+            approveAmount,
+        );
+        console.log('approveData:', approveData);
 
-    const approveData = await tokenContract.populateTransaction.approve(
-        swap.data.deposit.approve_address,
-        approveAmount,
-    );
-    console.log('approveData:', approveData);
+        const gasLimitApprove = (await provider.estimateGas({from: myAddress, ...approveData})).mul('120').div('100'); //add 20% to gasLimit for guaranteed execution
+        console.log('approve gasLimit:', gasLimitApprove.toString());
 
-    const gasLimitApprove = (await provider.estimateGas({ from: myAddress, ...approveData })).mul('120').div('100'); //add 20% to gasLimit for guaranteed execution
-    console.log('approve gasLimit:', gasLimitApprove.toString());
+        const approveTx = {
+            from: myAddress,
+            to: approveData.to,
+            data: approveData.data,
+            gasPrice,
+            gasLimit: gasLimitApprove,
+            chainId: (await provider.getNetwork()).chainId,
+            nonce: await provider.getTransactionCount(myAddress),
+        };
+        console.log('approveTx:', approveTx);
 
-    const approveTx = {
-        from: myAddress,
-        to: approveData.to,
-        data: approveData.data,
-        gasPrice,
-        gasLimit: gasLimitApprove,
-        chainId: (await provider.getNetwork()).chainId,
-        nonce: await provider.getTransactionCount(myAddress),
-    };
-    console.log('approveTx:', approveTx);
+        const signedApproveTx = await wallet.signTransaction(approveTx);
 
-    const signedApproveTx = await wallet.signTransaction(approveTx);
+        console.log('approveTxSigned:', signedApproveTx);
 
-    console.log('approveTxSigned:', signedApproveTx);
+        const approve = await provider.sendTransaction(signedApproveTx);
 
-    const approve = await provider.sendTransaction(signedApproveTx);
+        console.log('approveHash:', approve.hash);
 
-    console.log('approveHash:', approve.hash);
+        await approve.wait(1);
 
-    await approve.wait(1);
-
-    console.log('approve success');
-
+        console.log('approve success');
+    }
     // approve end
 
     //swap
@@ -181,11 +180,11 @@ const http = axios.create({
     const swapTxData = {
         chainId: (await provider.getNetwork()).chainId,
         nonce: await provider.getTransactionCount(myAddress),
-        gasLimit: null,
+        gasLimit: ethers.BigNumber.from('2000000').toHexString(),
         gasPrice: gasPrice,
         from: myAddress,
         to: swap.data.deposit.send_address,
-        value: ethers.utils.hexlify(Number(swap.data.deposit.value)),
+        value: ethers.BigNumber.from(swap.data.deposit.value).toHexString(),
         data: swap.data.deposit.data,
     };
     console.log('swapTxData', swapTxData);
