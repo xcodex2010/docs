@@ -1453,6 +1453,61 @@
       }
     },
 
+    "/v2/transactions-list": {
+      "get": {
+        "description": "It returns detailed information about transactions. [API Version 2]",
+        "parameters": [{
+          "name": "page",
+          "in": "query",
+          "description": "Page number for pagination",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          },
+          "example": 1
+        }],
+        "responses": {
+          "200": {
+            "description": "Coins response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTransactionsPaginateResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Wrong API key in Bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WrongAPITokenError"
+                },
+                "example": {
+                  "error": "Wrong number of segments"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Internal error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
     "/v1/transaction/{id}/status": {
       "get": {
         "description": "Allows the current status of the transaction to be checked as a string.",
@@ -3771,6 +3826,344 @@
             "example": 0.01343595,
             "nullable": true,
             "type": "number"
+          },
+          "aml_error_signals": {
+            "description": "List of AML signals when the status is [aml_check_failed](/documentation/statuses#aml-check-failed)",
+            "example": [{
+              "signal":"mixingService",
+              "signalId":24,
+              "signalPercent":95.6,
+              "level":4}
+            ],
+            "type": "array"
+          }
+        }
+      },
+
+      "GetTransactionsPaginateResponse": {
+        "type": "object",
+        "properties": {
+          "current_page": {
+            "type": "integer",
+            "example": 1
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionsPaginateObj"
+            }
+          },
+          "from": {
+            "type": "integer",
+            "example": 1
+          },
+          "last_page": {
+            "type": "integer",
+            "example": 118
+          },
+          "next_page_url": {
+            "type": "string",
+            "nullable": true,
+            "example": "https://api.letsexchange.io/api/v2/transactions-list?page=2"
+          },
+          "path": {
+            "type": "string",
+            "example": "https://api.letsexchange.io/api/v2/transactions-list"
+          },
+          "per_page": {
+            "type": "integer",
+            "example": 50
+          },
+          "prev_page_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "to": {
+            "type": "integer",
+            "example": 50
+          },
+          "total": {
+            "type": "integer",
+            "example": 5867
+          }
+        }
+      },
+
+      "TransactionsPaginateObj": {
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "description": "Transaction creation date",
+            "example": "2025-02-05 18:52:46",
+            "type": "string"
+          },
+          "status": {
+            "description": "Transaction status is used to notify a user about the progress of the exchange process. See [transaction statuses for a detailed description](/documentation/statuses)",
+            "example": "wait",
+            "type": "string"
+          },
+          "transaction_id": {
+            "description": "Unique identifier for transaction assigned by letsexchange.io",
+            "example": "5bb44a4d99cd5",
+            "type": "string"
+          },
+          "coin_from": {
+            "description": "Coin to exchange `from`",
+            "example": "BTC",
+            "type": "string"
+          },
+          "coin_from_name": {
+            "description": "Coin to exchange `from` name",
+            "example": "Bitcoin",
+            "type": "string"
+          },
+          "coin_from_network": {
+            "description": "Coin to exchange `from` network",
+            "example": "BTC",
+            "type": "string"
+          },
+          "coin_from_icon": {
+            "description": "Asset to exchange `from` icon",
+            "example": "https://images.letsexchange.io/coins/6dfa9838b46e464c1c27446f6e7b4b64.svg",
+            "type": "string"
+          },
+          "coin_from_explorer_url": {
+            "description": "An explorer URL for a cryptocurrency to send",
+            "example": "https://blockchair.com/bitcoin/transaction/",
+            "type": "string"
+          },
+          "coin_from_additional_get_info": {
+            "description": "Additional info for a coin `from` to get",
+            "example": "Due to network requirements, the exchange will be processed after 500 confirmations of your deposit transaction.",
+            "type": "string"
+          },
+          "coin_from_additional_send_info": {
+            "description": "Additional info for a coin `from` to send",
+            "example": "Please note that token has migrated to the new Binance Chain contact address",
+            "type": "string"
+          },
+          "coin_from_contract_address": {
+            "description": "Asset `from` contract address",
+            "example": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "type": "string"
+          },
+          "coin_from_extra_name": {
+            "description": "Name of `from` the extra ID",
+            "example": "MEMO",
+            "nullable": true,
+            "type": "string"
+          },
+          "coin_to": {
+            "description": "Coin to exchange `to`",
+            "example": "USDT",
+            "type": "string"
+          },
+          "coin_to_name": {
+            "description": "Coin to exchange `to` name",
+            "example": "TetherUS",
+            "type": "string"
+          },
+          "coin_to_network": {
+            "description": "Coin to exchange `to` network",
+            "example": "TRC20",
+            "type": "string"
+          },
+          "coin_to_icon": {
+            "description": "Asset to exchange `to` icon",
+            "example": "https://images.letsexchange.io/coins/6dfa9838b46e464c1c27446f6e7b4b64.svg",
+            "type": "string"
+          },
+          "coin_to_explorer_url": {
+            "description": "An explorer URL for a cryptocurrency to get",
+            "example": "https://tronscan.org/#/transaction/",
+            "type": "string"
+          },
+          "coin_to_contract_address": {
+            "description": "Asset `to` contract address",
+            "example": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+            "type": "string"
+          },
+          "coin_to_additional_get_info": {
+            "description": "Additional info for a coin `to` to get",
+            "example": "Due to network requirements, the exchange will be processed after 500 confirmations of your deposit transaction.",
+            "type": "string"
+          },
+          "coin_to_additional_send_info": {
+            "description": "Additional info for a coin `to` to send",
+            "example": "Please note that token has migrated to the new Binance Chain contact address",
+            "type": "string"
+          },
+          "coin_to_extra_name": {
+            "description": "Name of `to` the extra ID",
+            "example": "MEMO",
+            "nullable": true,
+            "type": "string"
+          },
+          "deposit_amount": {
+            "description": "The amount of coins to be exchanged is specified by a user",
+            "example": "0.01",
+            "type": "string"
+          },
+          "withdrawal_amount": {
+            "description": "This is the expected amount that a user will receive when an exchange is completed",
+            "example": "595.94740104",
+            "type": "string"
+          },
+          "real_deposit_amount": {
+            "description": "Displays received deposit amount. It may differ from the amount specified by user",
+            "example": "500",
+            "type": "string"
+          },
+          "real_withdrawal_amount": {
+            "description": "If the received deposit differs from the initial amount, the final amount is recalculated using the same rate",
+            "example": "0.0098743",
+            "type": "string"
+          },
+          "deposit": {
+            "description": "The deposit address to which a user must send the coins",
+            "example": "bc1efvrjjxxxx9nzzzcuzhqdxxxwe0wxx",
+            "type": "string"
+          },
+          "deposit_extra_id": {
+            "description": "Additional ID for deposit addresses for cryptocurrencies that use extra ID for transaction processing. **Important: sending coins without using extra ID (when it is provided) may result in loss of funds!**",
+            "example": null,
+            "nullable": true,
+            "type": "string"
+          },
+          "withdrawal": {
+            "description": "The destination address. LetsExchange will send the exchanged coins to this address",
+            "example": "TR7NHqjeKQxGTCi8q8ZY4txxxSzgjLj6t",
+            "type": "string"
+          },
+          "withdrawal_extra_id": {
+            "description": "Additional ID for destination wallet addresses for currencies that use extra ID for transaction processing. The field should be empty if an extra ID is not provided for a given cryptocurrency. **A request without this field is not allowed.**",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "rate": {
+            "description": "The current exchange rate offered by LetsExchange",
+            "example": "60186.054837423674181",
+            "type": "string"
+          },
+          "fee": {
+            "description": "Service fee (in destination currency) **[DEPRECATED]**",
+            "example": "0",
+            "type": "string"
+          },
+          "hash_in": {
+            "description": "Incoming transaction hash",
+            "example": "d04cb31fcaa58ca8f8bba45120dba9119c70e8c5e1301209",
+            "type": "string"
+          },
+          "hash_out": {
+            "description": "Outcoming transaction hash",
+            "example": "s120dba9119c70e8c5e130120904cb31fcaa58ca8f8bba45",
+            "type": "string"
+          },
+          "return": {
+            "description": "A user's address he sent coins from or another one that may be used as a refund address if it is necessary",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_hash": {
+            "description": "Hash for transaction refund",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_amount": {
+            "description": "Amount of transaction refund",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_extra_id": {
+            "description": "Additional ID for refund wallet addresses of currencies that use extra ID for transaction processing",
+            "example": "",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_extra_name": {
+            "description": "Name of `return` the extra ID",
+            "example": "MEMO",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_coin": {
+            "description": "Coin of transaction refund",
+            "example": "USDT",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_network": {
+            "description": "Network of transaction refund",
+            "example": "ERC20",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_network_code": {
+            "description": "Network code of transaction refund",
+            "example": "ERC20",
+            "nullable": true,
+            "type": "string"
+          },
+          "return_explorer_url": {
+            "description": "An explorer URL for a `return` send",
+            "example": "https://etherscan.io/tx/",
+            "type": "string"
+          },
+          "return_icon": {
+            "description": "Asset to exchange `return` icon",
+            "example": "https://images.letsexchange.io/coins/6dfa9838b46e464c1c27446f6e7b4b64.svg",
+            "type": "string"
+          },
+          "is_float": {
+            "description": "Transaction FIXED or FLOAT",
+            "example": "true",
+            "type": "boolean"
+          },
+          "need_confirmations": {
+            "description": "Minimum number of confirmations to start the exchanging",
+            "example": 4,
+            "type": "number"
+          },
+          "confirmations": {
+            "description": "Current number of confirmations",
+            "example": 20,
+            "type": "number"
+          },
+          "type": {
+            "description": "Transaction type",
+            "example": "cex",
+            "type": "string"
+          },
+          "revert": {
+            "description": "Is transaction revert",
+            "example": "0",
+            "type": "number"
+          },
+          "expired_at": {
+            "description": "The timestamp (in milliseconds) when the transaction will expire",
+            "example": 1749119554,
+            "type": "number"
+          },
+          "affiliate_profit_btc": {
+            "description": "Affiliate reward in BTC",
+            "example": "0.00227500",
+            "type": "string"
+          },
+          "email": {
+            "description": "User email",
+            "example": "user@gmail.com",
+            "type": "string"
+          },
+          "promo_code_profit": {
+            "description": "If a promo code was used, a bonus value",
+            "example": "0.18630000",
+            "nullable": true,
+            "type": "string"
           },
           "aml_error_signals": {
             "description": "List of AML signals when the status is [aml_check_failed](/documentation/statuses#aml-check-failed)",

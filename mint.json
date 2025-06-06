@@ -93,6 +93,7 @@
           "pages": [
             "api-reference/endpoint/v1/transaction/get-transaction",
             "api-reference/endpoint/v1/transaction/get-transactions-list",
+            "api-reference/endpoint/v2/transaction/get-transactions-list",
             "api-reference/endpoint/v1/transaction/get-transaction-status",
             "api-reference/endpoint/v1/transaction/transaction-check-promocode"
           ]
