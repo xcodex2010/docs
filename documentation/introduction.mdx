@@ -30,6 +30,22 @@ By integrating the LetsExchange API, you can:
 4. This parameter should be filled only if the coin has this additional identifier. In any other case, this parameter is not filled out or sent.
 5. The list of supported cryptocurrencies is constantly growing as we add new coins.
 
+# Network features
+
+LetsExchange supports a wide range of networks. Some of them have specific requirements or limitations that may affect the exchange processing or the transaction result. These requirements are preferably displayed for users and considered by partners when integrating the API to ensure proper exchange handling in your app or service.
+
+Below are examples:
+- BEAM – Make sure your BEAM wallet is online for receiving.
+- FIRO – Please note that shielded transactions from hidden addresses can't be credited to the balance.
+- POLYX – Please note that your POLYX address needs to be verified with CDD to receive deposits.
+- FLOW – Please note that FLOW via EVM is not supported.
+- PIVX - Please note that shielded transactions from hidden addresses can't be retrieved/processed.
+
+All the necessary information is sent via API.
+
+This list is maintained and updated as new networks and rules are added.
+
+
 # Notes for DeFi API
 
 1. DeFi swaps are executed directly from the user's wallet and require signing transactions.
