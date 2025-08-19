@@ -1655,7 +1655,7 @@
           },
           "contract_address": {
             "description": "Contract address",
-            "example": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+            "example": "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
             "type": "string"
           }
         }
@@ -1746,7 +1746,7 @@
                 },
                 "contract_address": {
                   "description": "Contract address",
-                  "example": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                  "example": "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
                   "type": "string"
                 },
                 "validation_address_regex": {
