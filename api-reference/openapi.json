@@ -2084,7 +2084,7 @@
             "type": "string"
           },
           "float": {
-            "description": "Is float. Default value - true",
+            "description": "Is float. Default value - false",
             "example": true,
             "type": "boolean"
           }
@@ -2739,7 +2739,7 @@
         "type": "object",
         "properties": {
           "float": {
-            "description": "Is float. Default value - true",
+            "description": "Is float. Default value - false",
             "example": true,
             "type": "boolean"
           },
