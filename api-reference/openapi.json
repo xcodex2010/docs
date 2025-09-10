@@ -1456,16 +1456,48 @@
     "/v2/transactions-list": {
       "get": {
         "description": "It returns detailed information about transactions. [API Version 2]",
-        "parameters": [{
-          "name": "page",
-          "in": "query",
-          "description": "Page number for pagination",
-          "required": false,
-          "schema": {
-            "type": "integer"
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number for pagination",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
           },
-          "example": 1
-        }],
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of elements per page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 10
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "description": "Start date filter",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1757404910
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "description": "End date filter",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1757405520
+          }
+        ],
         "responses": {
           "200": {
             "description": "Coins response",
@@ -3922,6 +3954,12 @@
             "example": "BTC",
             "type": "string"
           },
+          "coin_from_chain_id": {
+            "description": "Chain ID EVM `from` network",
+            "example": 56,
+            "nullable": true,
+            "type": "number"
+          },
           "coin_from_icon": {
             "description": "Asset to exchange `from` icon",
             "example": "https://images.letsexchange.io/coins/6dfa9838b46e464c1c27446f6e7b4b64.svg",
@@ -3967,6 +4005,12 @@
             "description": "Coin to exchange `to` network",
             "example": "TRC20",
             "type": "string"
+          },
+          "coin_to_chain_id": {
+            "description": "Chain ID EVM `to` network",
+            "example": 56,
+            "nullable": true,
+            "type": "number"
           },
           "coin_to_icon": {
             "description": "Asset to exchange `to` icon",
