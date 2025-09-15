@@ -22,6 +22,15 @@
     "/v1/coins": {
       "get": {
         "description": "This returns the list of coins available for exchange with the selected coin at a given time or sends the entire list of coins. \nThe response also contains parameters such as the “extra ID”, if applicable for a specific cryptocurrency, for example, the Destination Tag for XRP (XRP). \n\nIn addition, the response provides icon links.\n",
+        "parameters": [{
+          "in": "query",
+          "name": "partner_user_ip",
+          "schema": {
+            "type": "string",
+            "description": "End user IP address",
+            "example": "127.0.0.1"
+          }
+        }],
         "responses": {
           "200": {
             "description": "Coins response",
@@ -69,6 +78,15 @@
     "/v2/coins": {
       "get": {
         "description": "This returns the list of coins available for exchange with a selected coin at a given time or the entire list of coins. Each coin entry contains an array of networks. \n\nThe response also contains parameters such as the “extra ID”, if applicable for a specific cryptocurrency, for example, the Destination Tag for XRP (XRP). \n\nIn addition, the response provides icon links.\n",
+        "parameters": [{
+          "in": "query",
+          "name": "partner_user_ip",
+          "schema": {
+            "type": "string",
+            "description": "End user IP address",
+            "example": "127.0.0.1"
+          }
+        }],
         "responses": {
           "200": {
             "description": "Coins response",
@@ -117,6 +135,15 @@
     "/v1/dex/coins": {
       "get": {
         "description": "This returns the list of coins available for DEX swap. \nThe response also contains parameters such as the “extra ID”, if applicable for a specific cryptocurrency, for example, the Destination Tag for XRP (XRP). \n\nIn addition, the response provides icon links.\n",
+        "parameters": [{
+          "in": "query",
+          "name": "partner_user_ip",
+          "schema": {
+            "type": "string",
+            "description": "End user IP address",
+            "example": "127.0.0.1"
+          }
+        }],
         "responses": {
           "200": {
             "description": "DEX Coins response",
@@ -1985,6 +2012,12 @@
             "description": "Affiliate ID",
             "example": "q1W2e3R4tEXAMPLE",
             "type": "string"
+          },
+          "partner_user_ip": {
+            "description": "End user IP address",
+            "example": "127.0.0.1",
+            "nullable": true,
+            "type": "string"
           }
         }
       },
@@ -2119,6 +2152,12 @@
             "description": "Is float. Default value - false",
             "example": true,
             "type": "boolean"
+          },
+          "partner_user_ip": {
+            "description": "End user IP address",
+            "example": "127.0.0.1",
+            "nullable": true,
+            "type": "string"
           }
         }
       },
@@ -2221,6 +2260,12 @@
             "description": "Affiliate ID",
             "example": "q1W2e3R4tEXAMPLE",
             "type": "string"
+          },
+          "partner_user_ip": {
+            "description": "End user IP address",
+            "example": "127.0.0.1",
+            "nullable": true,
+            "type": "string"
           }
         }
       },
@@ -2311,6 +2356,12 @@
           "affiliate_id": {
             "description": "Affiliate ID",
             "example": "q1W2e3R4tEXAMPLE",
+            "type": "string"
+          },
+          "partner_user_ip": {
+            "description": "End user IP address",
+            "example": "127.0.0.1",
+            "nullable": true,
             "type": "string"
           }
         }
@@ -2403,6 +2454,12 @@
             "description": "Affiliate ID",
             "example": "q1W2e3R4tEXAMPLE",
             "type": "string"
+          },
+          "partner_user_ip": {
+            "description": "End user IP address",
+            "example": "127.0.0.1",
+            "nullable": true,
+            "type": "string"
           }
         }
       },
@@ -2476,6 +2533,12 @@
           "affiliate_id": {
             "description": "Affiliate ID",
             "example": "q1W2e3R4tEXAMPLE",
+            "type": "string"
+          },
+          "partner_user_ip": {
+            "description": "End user IP address",
+            "example": "127.0.0.1",
+            "nullable": true,
             "type": "string"
           },
           "coins": {
