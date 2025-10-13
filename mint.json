@@ -15,6 +15,11 @@
       "to": "#07C983"
     }
   },
+  "seo": {
+    "metatags": {
+      "robots": "noindex, nofollow"
+    }
+  },
   "topbarLinks": [
     {
       "name": "Support",
