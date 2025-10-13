@@ -1,0 +1,118 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "LetsExchange",
+  "colors": {
+    "primary": "#159DFF",
+    "light": "#159DFF",
+    "dark": "#159DFF"
+  },
+  "seo": {
+    "metatags": {
+      "robots": "noindex, nofollow"
+    }
+  },
+  "favicon": "/fav.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "documentation/introduction",
+              "documentation/swap-flow",
+              "documentation/defi-swap-flow",
+              "documentation/statuses",
+              "documentation/transaction-errors",
+              "documentation/affiliate-link",
+              "documentation/faq"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "API Documentation",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/authentication"
+            ]
+          },
+          {
+            "group": "REST API",
+            "pages": [
+              {
+                "group": "Coins",
+                "pages": [
+                  "api-reference/endpoint/v1/coins/coins",
+                  "api-reference/endpoint/v2/coins/coins",
+                  "api-reference/endpoint/v1/coins/info-bulk"
+                ]
+              },
+              {
+                "group": "Create Swap",
+                "pages": [
+                  "api-reference/endpoint/v1/coins/info",
+                  "api-reference/endpoint/v1/transaction/create-transaction",
+                  "api-reference/endpoint/v1/coins/info-revert",
+                  "api-reference/endpoint/v1/transaction/create-transaction-revert"
+                ]
+              },
+              {
+                "group": "Create Bridge",
+                "pages": [
+                  "api-reference/endpoint/v1/coins/bridge/info",
+                  "api-reference/endpoint/v1/transaction/bridge/create-transaction",
+                  "api-reference/endpoint/v1/coins/bridge/info-revert",
+                  "api-reference/endpoint/v1/transaction/bridge/create-transaction-revert"
+                ]
+              },
+              {
+                "group": "Create DEX ❗[BETA]❗",
+                "pages": [
+                  "api-reference/endpoint/v1/transaction/dex/coins",
+                  "api-reference/endpoint/v1/transaction/dex/networks",
+                  "api-reference/endpoint/v1/transaction/dex/quote",
+                  "api-reference/endpoint/v1/transaction/dex/swap",
+                  "api-reference/endpoint/v1/transaction/dex/get-swap-info"
+                ]
+              },
+              {
+                "group": "Get Transaction Info",
+                "pages": [
+                  "api-reference/endpoint/v1/transaction/get-transaction",
+                  "api-reference/endpoint/v1/transaction/get-transactions-list",
+                  "api-reference/endpoint/v2/transaction/get-transactions-list",
+                  "api-reference/endpoint/v1/transaction/get-transaction-status",
+                  "api-reference/endpoint/v1/transaction/transaction-check-promocode"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:support@letsexchange.io"
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/letsexchange_io",
+      "linkedin": "https://www.linkedin.com/company/letsexchange/"
+    }
+  }
+}
