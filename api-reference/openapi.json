@@ -24,6 +24,15 @@
         "description": "This returns the list of coins available for exchange with the selected coin at a given time or sends the entire list of coins. \nThe response also contains parameters such as the “extra ID”, if applicable for a specific cryptocurrency, for example, the Destination Tag for XRP (XRP). \n\nIn addition, the response provides icon links.\n",
         "parameters": [{
           "in": "query",
+          "name": "affiliate_id",
+          "schema": {
+            "type": "string",
+            "description": "Affiliate ID",
+            "example": "q1W2e3R4tEXAMPLE"
+          },
+          "required": true
+        },{
+          "in": "query",
           "name": "partner_user_ip",
           "schema": {
             "type": "string",
@@ -79,6 +88,15 @@
       "get": {
         "description": "This returns the list of coins available for exchange with a selected coin at a given time or the entire list of coins. Each coin entry contains an array of networks. \n\nThe response also contains parameters such as the “extra ID”, if applicable for a specific cryptocurrency, for example, the Destination Tag for XRP (XRP). \n\nIn addition, the response provides icon links.\n",
         "parameters": [{
+          "in": "query",
+          "name": "affiliate_id",
+          "schema": {
+            "type": "string",
+            "description": "Affiliate ID",
+            "example": "q1W2e3R4tEXAMPLE"
+          },
+          "required": true
+        },{
           "in": "query",
           "name": "partner_user_ip",
           "schema": {
