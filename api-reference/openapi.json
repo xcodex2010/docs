@@ -1541,6 +1541,16 @@
               "type": "integer"
             },
             "example": 1757405520
+          },
+          {
+            "name": "transaction_id",
+            "in": "query",
+            "description": "TransactionID filter",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "c69fb45*******d"
           }
         ],
         "responses": {
