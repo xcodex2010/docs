@@ -1500,7 +1500,7 @@
 
     "/v2/transactions-list": {
       "get": {
-        "description": "It returns detailed information about transactions. [API Version 2]",
+        "description": "It returns detailed information about transactions. [API Version 2]\n\n<Warning>To use this API, you must configure trusted IP addresses for your API keys in [Personal Area](https://my.letsexchange.io/auth/login) → [API for Developers](https://my.letsexchange.io/dashboard/api-keys).</Warning>",
         "parameters": [
           {
             "name": "page",
@@ -1572,7 +1572,7 @@
                   "$ref": "#/components/schemas/WrongAPITokenError"
                 },
                 "example": {
-                  "error": "Wrong number of segments"
+                  "error": "Wrong number of segments | Access denied"
                 }
               }
             }
