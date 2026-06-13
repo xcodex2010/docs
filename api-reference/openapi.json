@@ -2856,8 +2856,7 @@
           "network_to",
           "deposit_amount",
           "withdrawal",
-          "withdrawal_extra_id",
-          "affiliate_id"
+          "withdrawal_extra_id"
         ],
         "type": "object",
         "properties": {
@@ -2931,8 +2930,9 @@
             "type": "string"
           },
           "affiliate_id": {
-            "description": "Affiliate ID",
+            "description": "**To receive an affiliate fee from a transaction, the API query must include the following parameter: `affiliate_id`.**",
             "example": "q1W2e3R4tEXAMPLE",
+            "nullable": true,
             "type": "string"
           },
           "partner_user_ip": {
@@ -3094,8 +3094,7 @@
           "withdrawal_amount",
           "withdrawal",
           "withdrawal_extra_id",
-          "rate_id",
-          "affiliate_id"
+          "rate_id"
         ],
         "type": "object",
         "properties": {
@@ -3163,7 +3162,7 @@
             "type": "string"
           },
           "affiliate_id": {
-            "description": "Affiliate ID",
+            "description": "**To receive an affiliate fee from a transaction, the API query must include the following parameter: `affiliate_id`.**",
             "example": "q1W2e3R4tEXAMPLE",
             "type": "string"
           },
@@ -3323,8 +3322,7 @@
           "network_to",
           "deposit_amount",
           "withdrawal",
-          "withdrawal_extra_id",
-          "affiliate_id"
+          "withdrawal_extra_id"
         ],
         "type": "object",
         "properties": {
@@ -3388,7 +3386,7 @@
             "type": "string"
           },
           "affiliate_id": {
-            "description": "Affiliate ID",
+            "description": "**To receive an affiliate fee from a transaction, the API query must include the following parameter: `affiliate_id`.**",
             "example": "q1W2e3R4tEXAMPLE",
             "type": "string"
           },
@@ -3549,8 +3547,7 @@
           "withdrawal_amount",
           "withdrawal",
           "withdrawal_extra_id",
-          "rate_id",
-          "affiliate_id"
+          "rate_id"
         ],
         "type": "object",
         "properties": {
@@ -3608,7 +3605,7 @@
             "type": "string"
           },
           "affiliate_id": {
-            "description": "Affiliate ID",
+            "description": "**To receive an affiliate fee from a transaction, the API query must include the following parameter: `affiliate_id`.**",
             "example": "q1W2e3R4tEXAMPLE",
             "type": "string"
           },
